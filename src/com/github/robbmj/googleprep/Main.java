@@ -1,14 +1,19 @@
 
-import java.util.ArrayList;
-import java.util.Arrays;
+package com.github.robbmj.googleprep;
 
-import datastructures.*;
+import java.util.ArrayList;
+
+import com.github.robbmj.googleprep.datastructures.BinaryTree;
+import com.github.robbmj.googleprep.datastructures.Heap;
+import com.github.robbmj.googleprep.datastructures.MaxHeap;
+import com.github.robbmj.googleprep.datastructures.MinHeap;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		testMaxHeap();
+		//testMaxHeap();
+		testMinHeap();
 	}
 
 	public static double log2(double num) {
@@ -73,6 +78,33 @@ public class Main {
 		
 	}
 	
+	public static void testMinHeap() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(5);
+		ints.add(1);
+		ints.add(9);
+		ints.add(6);
+		ints.add(7);
+		
+		Heap<Integer> heap = new MinHeap<>(ints);
+		heap.print();
+		
+		System.out.println(heap.remove());
+		heap.print();
+		
+		System.out.println(heap.remove());
+		heap.print();
+		
+		System.out.println(heap.remove());
+		heap.print();
+		
+		System.out.println(heap.remove());
+		heap.print();
+		
+		System.out.println(heap.remove());
+		heap.print();
+		
+	}
 	
 	public static void schedual() {
 		

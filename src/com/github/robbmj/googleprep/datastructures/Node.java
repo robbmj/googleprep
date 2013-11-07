@@ -1,4 +1,4 @@
-package datastructures;
+package com.github.robbmj.googleprep.datastructures;
 
 public abstract class Node<T extends Comparable<T>> {
 

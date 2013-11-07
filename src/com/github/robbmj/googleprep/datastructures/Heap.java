@@ -1,4 +1,4 @@
-package datastructures;
+package com.github.robbmj.googleprep.datastructures;
 
 import java.util.ArrayList;
 
