@@ -3,11 +3,13 @@
 package com.github.robbmj.googleprep.datastructures;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class BinaryTree<T extends Comparable<T>> {
 
 	private BinaryTree<T> left;
 	private BinaryTree<T> right;
+	@SuppressWarnings("unused")
 	private BinaryTree<T> parent; // it is used
 	private T value;
 	
@@ -47,15 +49,37 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 	
-	public void print() {
-		print(this);
+	public void traverse(TreeCallback<T> cb) throws Exception {
+		if (this.left != null) {
+			this.left.traverse(cb);	
+		}
+		cb.setNodeValue(this.value);
+		cb.call();
+		if (this.right != null) {
+			this.right.traverse(cb);	
+		}
 	}
 	
-	private void print(BinaryTree<T> node) {
-		if (node != null) {
-			print(node.left);
-			System.out.print(node.value + " ");
-			print(node.right);
+	public void print() {
+		try {
+			traverse(new TreeCallback<T>() {
+				@Override
+				public T call() throws Exception {
+					System.out.print(nodeValue + " ");
+					return nodeValue;
+				}
+			});
+		} catch(Exception e) { }
+	}
+
+	@SuppressWarnings("hiding")
+	public abstract class TreeCallback<T> implements Callable<T> {
+
+		protected T nodeValue;
+		
+		public void setNodeValue(T nodeValue) {
+			this.nodeValue = nodeValue;
 		}
 	}
 }
+

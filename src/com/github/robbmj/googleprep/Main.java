@@ -2,6 +2,7 @@
 package com.github.robbmj.googleprep;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.github.robbmj.googleprep.datastructures.BinaryTree;
 import com.github.robbmj.googleprep.datastructures.Heap;
@@ -11,11 +12,33 @@ import com.github.robbmj.googleprep.datastructures.MinHeap;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		//testMaxHeap();
-		testBTree();
+		//System.out.println(karpRabin("mikejohn", "oh"));
+		testMaxHeap();
+		//testBTree();
 	}
 
+	public static int karpRabin(String text, String pattern) { // no
+		
+		int notFound = -1;
+		
+		if (pattern.length() > text.length()) {
+			return notFound;
+		}
+				
+		int head = pattern.length();
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		
+		for (int i = 0; head <= text.length(); i++, head++) {
+			map.put(text.substring(i, i + pattern.length()), i);
+		}
+		
+		if (map.containsKey(pattern)) {
+			return map.get(pattern);
+		}
+		return notFound;
+	}
+	
 	public static double log2(double num) {
 		return Math.log(num) / Math.log(2);
 	}
@@ -47,6 +70,16 @@ public class Main {
 		ints.add(13);
 		
 		BinaryTree<Integer> bTree = new BinaryTree<>(ints);
+		
+		try {
+			bTree.traverse(bTree.new TreeCallback<Integer>() {
+				@Override
+				public Integer call() throws Exception {
+					// do whatever you like here
+					return null;
+				}
+			});
+		} catch (Exception e) { }
 		
 		bTree.print();
 	}
