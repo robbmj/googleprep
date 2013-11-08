@@ -2,7 +2,7 @@ package com.github.robbmj.googleprep.datastructures;
 
 import java.util.ArrayList;
 
-public class MinHeap<T extends Comparable<T>> extends Heap<T> {
+public final class MinHeap<T extends Comparable<T>> extends Heap<T> {
 
 	public MinHeap(ArrayList<T> values) {
 		for (T value: values) {

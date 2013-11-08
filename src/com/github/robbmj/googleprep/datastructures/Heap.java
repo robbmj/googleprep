@@ -3,7 +3,7 @@ package com.github.robbmj.googleprep.datastructures;
 import java.util.ArrayList;
 
 public abstract class Heap<T extends Comparable<T>> {
-
+	
 	protected ArrayList<T> heap = new ArrayList<>();
 
 	protected abstract void heapifyUp(int index);
