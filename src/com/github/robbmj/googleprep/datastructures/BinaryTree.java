@@ -1,68 +1,61 @@
+
+
 package com.github.robbmj.googleprep.datastructures;
 
 import java.util.List;
 
-
 public class BinaryTree<T extends Comparable<T>> {
 
-	protected BinaryNode<T> root;
+	private BinaryTree<T> left;
+	private BinaryTree<T> right;
+	private BinaryTree<T> parent; // it is used
+	private T value;
 	
-	public BinaryTree() {}
+	public BinaryTree(T value, BinaryTree<T> parent) {
+		this.value = value;
+		this.parent = parent;
+	}
 	
 	public BinaryTree(List<T> values) {
-		this.root = new BinaryNode<T>(values.get(0));
 		
-		values.remove(0);
+		this (values.remove(0), null);
 		
-		for (T value : values) {
-			this.add(value);
+		for (T newValue : values) {
+			this.add(newValue);
 		}
 	}
 	
-	public void add(T value) {
-		add(value, root);
-	}
-	
-	private void add(T value, BinaryNode<T> node) {
-		int comparison = value.compareTo(node.getValue());
+	public void add(T newValue) {
+
+		int comparison = newValue.compareTo(this.value);
 		
 		if (comparison > 0) {
-			if (node.right == null) {
-				node.right = new BinaryNode<T>(value);
+			if (this.right == null) {
+				this.right = new BinaryTree<T>(newValue, this);
 			}
 			else {
-				add(value, node.right);
+				this.right.add(newValue);
 			}
 		}
 		else {
-			if (node.left == null) {
-				node.left = new BinaryNode<T>(value);
+			if (this.left == null) {
+				this.left = new BinaryTree<T>(newValue, this);
 			}
 			else {
-				add(value, node.left);
+				this.left.add(newValue);
 			}
 		}
 	}
 	
 	public void print() {
-		print(root);
+		print(this);
 	}
 	
-	private void print(BinaryNode<T> node) {
+	private void print(BinaryTree<T> node) {
 		if (node != null) {
-			System.out.println(node);
 			print(node.left);
+			System.out.print(node.value + " ");
 			print(node.right);
 		}
-	}
-}
-
-class BinaryNode<T extends Comparable<T>> extends Node<T> {
-
-	BinaryNode<T> left = null; 
-	BinaryNode<T> right = null;
-	
-	public BinaryNode(T value) {
-		super(value);
 	}
 }

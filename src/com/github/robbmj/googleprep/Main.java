@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		//testMaxHeap();
-		testMinHeap();
+		testBTree();
 	}
 
 	public static double log2(double num) {
@@ -36,16 +36,17 @@ public class Main {
 		System.out.println(x >> f);	
 	}
 	
-	void testBTree() {
-		ArrayList<String> ints = new ArrayList<>();
-		ints.add("f");
-		ints.add("a");
-		ints.add("b");
-		ints.add("m");
-		ints.add("z");
-		ints.add("c");
+	static void testBTree() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(7);
+		ints.add(3);
+		ints.add(12);
+		ints.add(1);
+		ints.add(6);
+		ints.add(9);
+		ints.add(13);
 		
-		BinaryTree<String> bTree = new BinaryTree<>(ints);
+		BinaryTree<Integer> bTree = new BinaryTree<>(ints);
 		
 		bTree.print();
 	}
