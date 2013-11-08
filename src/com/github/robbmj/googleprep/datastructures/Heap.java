@@ -10,10 +10,10 @@ public abstract class Heap<T extends Comparable<T>> {
 	
 	protected abstract void heapifyDown(int index);
 	
-	protected void swap(int from, int to) {
-		T tempObj = heap.remove(from);
-		heap.add(from, heap.remove(to - 1));
-		heap.add(to, tempObj);
+	protected void swap(int from, int to) {		
+		T tempObj = heap.get(from);
+		heap.set(from, heap.get(to));
+		heap.set(to, tempObj);
 	}
 	
 	public void add(T value) {
