@@ -2,7 +2,9 @@
 
 package com.github.robbmj.googleprep.datastructures;
 
-public class Linkedlist<T> {
+import java.util.Iterator;
+
+public class Linkedlist<T> implements Iterable<T> {
 
 	private Node first;
 	private Node last;
@@ -112,14 +114,37 @@ public class Linkedlist<T> {
 	
 	public String toString() {
 		String s = "[";
-		
-		Node node = this.first;
-		
-		while (node != null) {
-			s += node.value + ", ";
-			node = node.right;
+				
+		for (T val : this) {
+			s += val + ", ";
 		}
+
 		return s.substring(0, s.length() - 2) + "]";
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new MyIterator();
+	}
+	
+	private class MyIterator implements Iterator<T> {
+
+		Node node = Linkedlist.this.first;
+		
+		@Override
+		public boolean hasNext() {
+			return node != null;
+		}
+
+		@Override
+		public T next() {
+			T value = node.value;
+			node = node.right;
+			return value;
+		}
+
+		@Override
+		public void remove() { }
 	}
 }
 

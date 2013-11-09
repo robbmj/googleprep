@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		//System.out.println(karpRabin("mikejohn", "oh"));
 		//testMaxHeap();
-		//testHashmap();
+		testHashmap();
 		testLinkedlist();
 		//testBTree();
 	}
@@ -39,7 +39,7 @@ public class Main {
 	}
 	
 	public static void testHashmap() {
-		Hashmap<String, Integer> myMap = new Hashmap<>(4);
+		Hashmap<String, Integer> myMap = new Hashmap<>(2);
 		myMap.add("one", 1);
 		myMap.add("two", 2);
 		myMap.add("three", 3);
