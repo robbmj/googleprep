@@ -1,4 +1,4 @@
-package com.github.robbmj.googleprep.datastructures;
+package com.github.robbmj.googleprep.datastructures.graph;
 
 // Vertices: nodes
 // Edges: links
@@ -16,9 +16,13 @@ package com.github.robbmj.googleprep.datastructures;
 // the degree of a node is the number of edges coming out of it
 // isomorphic - same graph with different orientation
 // Planar graph - graph where no edges over lap
+// Sparse graph - lots of nodes not many edges
 
+// Adjacency Matrix: O(V^2) memory, answers is A connected to be really quickly, good for dense graphs
 
+// Edge List: O(V^2) memory, answers what are all the nodes connected to A quickly, good for sparse graphs
 
-public class Graph {
-
+public class Graph<E extends Vertex> {
+	
+	
 }

@@ -87,7 +87,7 @@ public class Linkedlist<T> implements Iterable<T> {
 	
 	private Node pGet(int index) {
 		Node iTHnode = this.first;
-		for (int i = 1; i < index; i++) {
+		for (int i = 0; i < index; i++) {
 			iTHnode = iTHnode.right;
 		}
 		return iTHnode;
@@ -119,7 +119,7 @@ public class Linkedlist<T> implements Iterable<T> {
 	}
 	
 	public void delete(int index) {
-		if (index < 0 || index > size) {
+		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException("index = " + index + ", size = " + size);
 		}
 		Node iTHnode = pGet(index);
@@ -127,6 +127,10 @@ public class Linkedlist<T> implements Iterable<T> {
 	}
 	
 	public boolean delete(T value) {
+		
+		if (size() == 0) {
+			return false;
+		}
 		
 		Node node = this.first;
 		
@@ -141,7 +145,21 @@ public class Linkedlist<T> implements Iterable<T> {
 		return true;
 	}
 	
+	public boolean contains(T value) {
+		for (T val : this) {
+			if (val.equals(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String toString() {
+		
+		if (size() == 0) {
+			return "[]";
+		}
+		
 		String s = "[";
 				
 		for (T val : this) {

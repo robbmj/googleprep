@@ -69,18 +69,30 @@ public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 		if ( ( leftChildExists && leftChild.compareTo(heap.get(index)) > 0 ) || 
 			 ( rightChildExists && rightChild.compareTo(heap.get(index)) > 0)) {
 			
+			int indexSwapedOn;
+			
 			if (leftChildExists && !rightChildExists) {
 				swap(index, indexOfLeftChild);
+				indexSwapedOn = indexOfLeftChild;
 			}
 			else if (!leftChildExists && rightChildExists) {
 				swap(index, indexOfRightChild);
+				indexSwapedOn = indexOfRightChild;
 			}
 			else if (leftChild.compareTo(rightChild) > 0) {
 				swap(index, indexOfLeftChild);
+				indexSwapedOn = indexOfLeftChild;
 			}
 			else if (leftChild.compareTo(rightChild) < 0) {
 				swap(index, indexOfRightChild);
+				indexSwapedOn = indexOfRightChild;
 			}
+			else {
+				swap(index, indexOfLeftChild);
+				indexSwapedOn = indexOfLeftChild;
+			}
+			
+			heapifyDown(indexSwapedOn);
 		}
 	}
 }

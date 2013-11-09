@@ -3,7 +3,6 @@
 package com.github.robbmj.googleprep.datastructures;
 
 import java.math.BigInteger;
-//import java.util.LinkedList;
 
 // Hashmap with chaining
 public final class Hashmap<K, V> {
@@ -52,6 +51,12 @@ public final class Hashmap<K, V> {
 			map[pos] = list;
 		}
 		else {
+			
+			for (ListNode n : (Linkedlist<ListNode>)map[pos]) {
+				if (n.key.equals(key)) {
+					((Linkedlist<ListNode>)map[pos]).delete(n);
+				}
+			}
 			((Linkedlist<ListNode>)map[pos]).add(node);
 		}
 		
