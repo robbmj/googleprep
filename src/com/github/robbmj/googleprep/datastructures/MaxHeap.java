@@ -13,7 +13,6 @@ public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 
 	@Override
 	public void add(T value) {
-		// TODO Auto-generated method stub
 		super.add(value);
 		heapifyUp(heap.size() - 1);
 	}

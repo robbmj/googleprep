@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.github.robbmj.googleprep.datastructures.BinaryTree;
+import com.github.robbmj.googleprep.datastructures.Hashmap;
 import com.github.robbmj.googleprep.datastructures.Heap;
+import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 
@@ -13,10 +15,48 @@ public class Main {
 
 	public static void main(String[] args) {
 		//System.out.println(karpRabin("mikejohn", "oh"));
-		testMaxHeap();
+		//testMaxHeap();
+		//testHashmap();
+		testLinkedlist();
 		//testBTree();
 	}
 
+	public static void testLinkedlist() {
+		Linkedlist<String> list = new Linkedlist<>();
+		
+		for (int i = 65; i < 91; i++) {
+			list.pushFront(i + "");
+		}
+		
+		list.add("9");
+		System.out.println(list);
+		list.delete("9");
+		
+		list.delete("65");
+		list.delete("66");
+		
+		System.out.println(list);
+	}
+	
+	public static void testHashmap() {
+		Hashmap<String, Integer> myMap = new Hashmap<>(4);
+		myMap.add("one", 1);
+		myMap.add("two", 2);
+		myMap.add("three", 3);
+		myMap.add("four", 4);
+		myMap.add("five", 5);
+		
+		System.out.println("------------------------------");
+	
+		
+		System.out.println(myMap.get("one"));
+		System.out.println(myMap.get("two"));
+		System.out.println(myMap.get("three"));
+		System.out.println(myMap.get("four"));
+		System.out.println(myMap.get("five"));
+		System.out.println(myMap.get(""));
+	}
+	
 	public static int karpRabin(String text, String pattern) { // no
 		
 		int notFound = -1;
