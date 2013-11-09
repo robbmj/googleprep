@@ -63,6 +63,28 @@ public class Linkedlist<T> implements Iterable<T> {
 		return pGet(index).value;
 	}
 	
+	public T removeFront() {
+		
+		if (size <= 0) {
+			throw new InvalidStateException("can't remove front from an empty list");
+		}
+		
+		T value = this.first.value;
+		delNode(this.first);
+		return value;
+	}
+	
+	public T removeBack() {
+		
+		if (size <= 0) {
+			throw new InvalidStateException("can't remove back from an empty list");
+		}
+		
+		T value = this.last.value;
+		delNode(this.last);
+		return value;
+	}
+	
 	private Node pGet(int index) {
 		Node iTHnode = this.first;
 		for (int i = 1; i < index; i++) {
@@ -75,6 +97,9 @@ public class Linkedlist<T> implements Iterable<T> {
 		if (node.left != null) {
 			node.left.right = node.right;
 		}
+		else if (size == 1) {
+			this.first = null;
+		}
 		else {
 			node.right.left = null;
 			this.first = node.right;
@@ -83,10 +108,14 @@ public class Linkedlist<T> implements Iterable<T> {
 		if (node.right != null) {
 			node.right.left = node.left;
 		}
+		else if (size == 1) {
+			this.last = null;
+		}
 		else {
 			node.left.right = null;
 			this.last = node.left;
 		}
+		size--;
 	}
 	
 	public void delete(int index) {
@@ -129,7 +158,7 @@ public class Linkedlist<T> implements Iterable<T> {
 	
 	private class MyIterator implements Iterator<T> {
 
-		Node node = Linkedlist.this.first;
+		private Node node = Linkedlist.this.first;
 		
 		@Override
 		public boolean hasNext() {

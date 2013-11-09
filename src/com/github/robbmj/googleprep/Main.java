@@ -10,17 +10,46 @@ import com.github.robbmj.googleprep.datastructures.Heap;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
+import com.github.robbmj.googleprep.datastructures.Queue;
+import com.github.robbmj.googleprep.datastructures.Stack;
 
 public class Main {
 
 	public static void main(String[] args) {
 		//System.out.println(karpRabin("mikejohn", "oh"));
 		//testMaxHeap();
+		//testQueue();
+		//System.out.println("------------------------------");
+		//testStack();
 		testHashmap();
-		testLinkedlist();
+		//testLinkedlist();
 		//testBTree();
 	}
 
+	public static void testQueue() {
+		Queue<Integer> queue = new Queue<>();
+		
+		for (int i = 0; i < 10; i++) {
+			queue.queue(i);
+		}
+		
+		for (int i = 0; i < 10; i++) {
+			System.out.println(queue.dequeue());
+		}
+	}
+	
+	public static void testStack() {
+		Stack<Integer> stack = new Stack<>();
+		
+		for (int i = 0; i < 10; i++) {
+			stack.push(i);
+		}
+		
+		for (int i = 9; i >= 0; i--) {
+			System.out.println(stack.pop());
+		}
+	}
+	
 	public static void testLinkedlist() {
 		Linkedlist<String> list = new Linkedlist<>();
 		

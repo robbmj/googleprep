@@ -111,8 +111,6 @@ public final class Hashmap<K, V> {
 		
 		Object[] oldMap = map;
 		map = new Object[(int)capasity];
-		
-		pickRandomVals();
 
 		for (int i = 0; i < oldMap.length; i++) {
 			if (oldMap[i] != null) {
