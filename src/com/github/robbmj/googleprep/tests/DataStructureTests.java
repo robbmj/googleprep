@@ -15,61 +15,60 @@ import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
-import com.github.robbmj.googleprep.datastructures.graphs.Graph;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
-import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Edge;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
 
 
 public final class DataStructureTests {
 
-	public static void testGraph() {
+	public static EdgeListGraph<String> muskokaTestData() {
 		
-		EdgeListGraph<String> builder = new EdgeListGraph<>();
+		EdgeListGraph<String> graph = new EdgeListGraph<>();
 		
-		Vertex<String> b = builder.createVertex("Bracebridge");
-		Vertex<String> g = builder.createVertex("Gravenhurst");
-		Vertex<String> h = builder.createVertex("Huntsville");
-		Vertex<String> bay = builder.createVertex("Baysville");
-		Vertex<String> bala = builder.createVertex("Bala");
-		Vertex<String> port = builder.createVertex("Port Sydney");
+		Vertex<String> b = graph.createVertex("Bracebridge");
+		Vertex<String> g = graph.createVertex("Gravenhurst");
+		Vertex<String> h = graph.createVertex("Huntsville");
+		Vertex<String> bay = graph.createVertex("Baysville");
+		Vertex<String> bala = graph.createVertex("Bala");
+		Vertex<String> port = graph.createVertex("Port Sydney");
+		Vertex<String> m = graph.createVertex("Mactier");
 		
 		b.addAdjacentVertex(g, 12);
 		b.addAdjacentVertex(h, 40);
 		b.addAdjacentVertex(bay, 25);
-		b.addAdjacentVertex(bala, 70);
-		b.addAdjacentVertex(port, 30);
-		
-		g.addAdjacentVertex(b, 12);
+		b.addAdjacentVertex(bala, 70, true);
+	
 		g.addAdjacentVertex(bala, 50);
 		
-		h.addAdjacentVertex(b, 40);
 		h.addAdjacentVertex(bay, 35);
+		h.addAdjacentVertex(bala, 2);
 		
-		bay.addAdjacentVertex(b, 25);
-		bay.addAdjacentVertex(h, 35);
+		bala.addAdjacentVertex(h, 2);
+		bala.addAdjacentVertex(m, 34);
 		
-		bala.addAdjacentVertex(g, 50);
+		port.addAdjacentVertex(b, 30, true);
 		
-		port.addAdjacentVertex(b, 30);
+		return graph;
+	}
+	
+	public static void testGraph() {
 		
+		EdgeListGraph<String> graph = muskokaTestData();
 		
-		ArrayList<Vertex<String>> nodes = new ArrayList<>();
-		
-		nodes.add(b);
-		nodes.add(g);
-		nodes.add(h);
-		nodes.add(bay);
-		nodes.add(bala);
-		nodes.add(port);
-		
-		EdgeListGraph<String> graph = new EdgeListGraph<>(nodes);
-		
-		graph.bredthFirstSearch(bay);
+		Hashmap<String, Vertex<String>> map = graph.getNodes();
+		/*
+		graph.bredthFirstSearch(map.get("Baysville"));
 		
 		System.out.println("--------------------------------");
 		
-		graph.depthFirstSearch(bay);
+		graph.depthFirstSearch(map.get("Bala"));
+				
+		System.out.println("--------------------------------");*/
+		System.out.println(
+				graph.shortestPath(map.get("Mactier"), map.get("Baysville"))
+			);
+		
+		//System.out.println(graph);
 	}
 	
 	public static void testQueue() {

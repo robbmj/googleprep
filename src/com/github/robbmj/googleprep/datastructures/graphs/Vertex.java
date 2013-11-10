@@ -1,7 +1,5 @@
 package com.github.robbmj.googleprep.datastructures.graphs;
 
-import com.github.robbmj.googleprep.datastructures.Linkedlist;
-
 public class Vertex<T> {
 
 	/*private T label;
