@@ -7,7 +7,12 @@ import java.util.HashMap;
 
 public class RandomProblems {
 
-public static void schedual() {
+	public static boolean lessThan(int x, int y) {
+		if (x == y) return false;
+		return (y - x) >> 31 == 0;
+	}
+	
+	public static void schedual() {
 		
 		ArrayList<int[]> times = new ArrayList<>(9);
 		times.add(new int[] {1,6});
@@ -62,7 +67,7 @@ public static void schedual() {
 		}
 	}
 	
-public static int karpRabin(String text, String pattern) { // no
+	public static int karpRabin(String text, String pattern) { // no, no, no
 		
 		int notFound = -1;
 		

@@ -15,9 +15,63 @@ import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
+import com.github.robbmj.googleprep.datastructures.graphs.Graph;
+import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
+import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Edge;
+import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
+
 
 public final class DataStructureTests {
 
+	public static void testGraph() {
+		
+		EdgeListGraph<String> builder = new EdgeListGraph<>();
+		
+		Vertex<String> b = builder.createVertex("Bracebridge");
+		Vertex<String> g = builder.createVertex("Gravenhurst");
+		Vertex<String> h = builder.createVertex("Huntsville");
+		Vertex<String> bay = builder.createVertex("Baysville");
+		Vertex<String> bala = builder.createVertex("Bala");
+		Vertex<String> port = builder.createVertex("Port Sydney");
+		
+		b.addAdjacentVertex(g, 12);
+		b.addAdjacentVertex(h, 40);
+		b.addAdjacentVertex(bay, 25);
+		b.addAdjacentVertex(bala, 70);
+		b.addAdjacentVertex(port, 30);
+		
+		g.addAdjacentVertex(b, 12);
+		g.addAdjacentVertex(bala, 50);
+		
+		h.addAdjacentVertex(b, 40);
+		h.addAdjacentVertex(bay, 35);
+		
+		bay.addAdjacentVertex(b, 25);
+		bay.addAdjacentVertex(h, 35);
+		
+		bala.addAdjacentVertex(g, 50);
+		
+		port.addAdjacentVertex(b, 30);
+		
+		
+		ArrayList<Vertex<String>> nodes = new ArrayList<>();
+		
+		nodes.add(b);
+		nodes.add(g);
+		nodes.add(h);
+		nodes.add(bay);
+		nodes.add(bala);
+		nodes.add(port);
+		
+		EdgeListGraph<String> graph = new EdgeListGraph<>(nodes);
+		
+		graph.bredthFirstSearch(bay);
+		
+		System.out.println("--------------------------------");
+		
+		graph.depthFirstSearch(bay);
+	}
+	
 	public static void testQueue() {
 		Queue<Integer> queue = new Queue<>();
 		

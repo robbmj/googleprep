@@ -1,4 +1,11 @@
-package com.github.robbmj.googleprep.datastructures.graph;
+
+
+package com.github.robbmj.googleprep.datastructures.graphs;
+
+import java.util.List;
+
+import com.github.robbmj.googleprep.datastructures.Linkedlist;
+import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Edge;
 
 // Vertices: nodes
 // Edges: links
@@ -22,7 +29,25 @@ package com.github.robbmj.googleprep.datastructures.graph;
 
 // Edge List: O(V^2) memory, answers what are all the nodes connected to A quickly, good for sparse graphs
 
-public class Graph<E extends Vertex> {
+public abstract class Graph<V extends Vertex<V>> {
 	
+	public abstract void bredthFirstSearch(V start);
 	
+	public abstract List<IEdge<V>> shortestPath(V v1, V v2);
+	
+	public abstract  Linkedlist<IEdge<V>> adjacentVertices(V v);
+	
+	public abstract void depthFirstSearch(V start);
+	
+	public static interface IEdge<V> {
+		
+		public V getDestination();
+	}
+	
+	public static interface IVertex<T> {
+		
+		public Linkedlist<Edge<T>> getEdges();
+		
+		public T getLabel();
+	}
 }

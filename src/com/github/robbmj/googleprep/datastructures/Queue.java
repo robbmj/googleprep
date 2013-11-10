@@ -26,4 +26,9 @@ public class Queue<T> {
 	public int size() {
 		return items.size();
 	}
+	
+	@Override
+	public String toString() {
+		return items.toString();
+	}
 }
