@@ -20,8 +20,9 @@ public class EdgeListGraph<T>  {
 	
 	public EdgeListGraph(ArrayList<Vertex<T>> nodes) {
 		initGraph(nodes);
+		Math.min(1, 1);
 	}
-	
+		
 	public Vertex<T> createVertex(T label) {
 		Vertex<T> v = new Vertex<>(label);
 		nodes.add(v);
@@ -79,14 +80,9 @@ public class EdgeListGraph<T>  {
 				boolean isShorter = (distances.get(next) == null) 
 						? true : test < distances.get(next);
 				
-				//System.out.println(test + " " + isShorter + " " + currentNode.getLabel() + " & " + next.getLabel());
-				
 				if (isShorter && visitedNodes.get(next) == null) {
-					//System.out.println(test + " " + isShorter + " " + currentNode.getLabel() + " & " + next.getLabel());
-					//System.out.println(next.getLabel());
 					distances.add(next, test);
 					nodesToVisit.queue(next);
-					
 					previous.add(next, currentNode);
 				}
 			}
@@ -186,10 +182,6 @@ public class EdgeListGraph<T>  {
 
 		private Linkedlist<Edge<T>> edges = new Linkedlist<>();
 		
-		public Vertex() {
-			
-		}
-
 		public Vertex(T label) {
 			this.label = label;
 		}
@@ -237,7 +229,7 @@ public class EdgeListGraph<T>  {
 		
 		@Override
 		public String toString() {
-			String s = label.toString() + "\n";
+			String s = "\n" + label.toString() + "\n";
 			for (Edge<T> edge : edges) {
 				
 				int weight = edge.getWeight();

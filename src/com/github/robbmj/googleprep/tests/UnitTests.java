@@ -14,13 +14,20 @@ import static com.github.robbmj.googleprep.tests.DataStructureTests.testQueue;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testStack;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testGraph;
 
+
+
+import static com.github.robbmj.googleprep.algorithms.CaptureAll.captureAll;
+
 public final class UnitTests {
 
 	public static void runAllTests() {
-		testGraph();
+		
+		captureAll(8);
 		
 		System.exit(0);
 		
+		testGraph();
+				
 		testKarpRabin();
 		testLessThan();
 		testQueue();

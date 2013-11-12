@@ -109,4 +109,8 @@ public class RandomProblems {
 		//System.out.println(test + " " + s);
 		System.out.println(x >> f);	
 	}
+	
+	public static String[] mediaTable(String[] medals) {
+		return null;
+	}
 }

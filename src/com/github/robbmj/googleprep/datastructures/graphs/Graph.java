@@ -29,8 +29,8 @@ import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Edge;
 
 // Edge List: O(V^2) memory, answers what are all the nodes connected to A quickly, good for sparse graphs
 
-public abstract class Graph<V extends Vertex<V>> {
-	
+public abstract class Graph {
+	/*
 	public abstract void bredthFirstSearch(V start);
 	
 	public abstract List<IEdge<V>> shortestPath(V v1, V v2);
@@ -49,5 +49,5 @@ public abstract class Graph<V extends Vertex<V>> {
 		public Linkedlist<Edge<T>> getEdges();
 		
 		public T getLabel();
-	}
+	}*/
 }

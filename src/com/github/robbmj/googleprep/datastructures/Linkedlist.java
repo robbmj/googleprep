@@ -24,6 +24,12 @@ public class Linkedlist<T> implements Iterable<T> {
 	
 	public Linkedlist() { }
 	
+	public void add(Linkedlist<T> list) {
+		this.last.right = list.first;
+		list.first.left = this.last;
+		this.last = list.last;
+	}
+	
 	public void add(T value) { // pushBack
 		Node node = new Node(this.last, null, value);
 		

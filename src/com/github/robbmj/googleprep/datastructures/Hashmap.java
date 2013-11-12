@@ -55,6 +55,8 @@ public final class Hashmap<K, V> {
 			for (ListNode n : (Linkedlist<ListNode>)map[pos]) {
 				if (n.key.equals(key)) {
 					((Linkedlist<ListNode>)map[pos]).delete(n);
+					size--;
+					break;
 				}
 			}
 			((Linkedlist<ListNode>)map[pos]).add(node);
@@ -116,7 +118,7 @@ public final class Hashmap<K, V> {
 		
 		Object[] oldMap = map;
 		map = new Object[(int)capasity];
-
+		size = 0;
 		for (int i = 0; i < oldMap.length; i++) {
 			if (oldMap[i] != null) {
 				for (ListNode node : (Linkedlist<ListNode>)oldMap[i]) {

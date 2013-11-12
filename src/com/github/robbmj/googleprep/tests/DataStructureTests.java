@@ -15,6 +15,8 @@ import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
+import com.github.robbmj.googleprep.datastructures.graphs.ChessPeice;
+import com.github.robbmj.googleprep.datastructures.graphs.ChessSquare;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
 
@@ -64,12 +66,35 @@ public final class DataStructureTests {
 		graph.depthFirstSearch(map.get("Bala"));
 				
 		System.out.println("--------------------------------");*/
-		System.out.println(
-				graph.shortestPath(map.get("Mactier"), map.get("Baysville"))
-			);
+		System.out.println(graph.shortestPath(map.get("Bracebridge"), map.get("Mactier")));
+
+	//	Vertex
 		
 		//System.out.println(graph);
 	}
+	
+/*	public static void testFoo() {
+		EdgeListGraph<ChessSquare<ChessPeice>> e = new EdgeListGraph<>();
+		
+		e.createVertex(new ChessSquare<>(new ChessPeice("K")));
+		
+		String[] cols = { "A", "B", "C", "D", "E", "F", "G", "H" };
+		int[] rows = {1,2,3,4,5,6,7,8};
+		
+		Hashmap<String, Vertex<ChessSquare<ChessPeice>>> board = new Hashmap<>();
+		
+		for (int i = 0; i < rows.length; i++) {
+			for (int j = 0; j < rows.length; j++) {
+				
+				Vertex<ChessSquare<ChessPeice>> pos = e.createVertex(new ChessSquare<>());
+				board.add(key, value)
+				
+			}
+		}
+		System.out.println(e);
+		// Vertex<ChessSquare> v1 = new Vertex<ChessSquare>(new ChessSquare());
+		
+	}*/
 	
 	public static void testQueue() {
 		Queue<Integer> queue = new Queue<>();
@@ -87,6 +112,11 @@ public final class DataStructureTests {
 		Assert(queue.size() == 0, "Test queue.size() == 0");
 		
 		System.out.println("All Queue Tests Passed");
+		
+		
+		
+		
+		
 	}
 	
 	public static void testStack() {
@@ -201,7 +231,9 @@ public final class DataStructureTests {
 		myMap.add("three", 3);
 		myMap.add("four", 4);
 		myMap.add("five", 5);
-			
+		
+		Assert(myMap.size() == 5, "Test Hashmap.size() failed to assert 5 == " + myMap.size());
+		
 		Assert(myMap.get("one") == 1, 	"Tests the key 'one' maps to '1'");
 		Assert(myMap.get("two") == 2, 	"Tests the key 'two' maps to '2'");
 		Assert(myMap.get("three") == 3, "Tests the key 'three' maps to '3'");
@@ -211,6 +243,7 @@ public final class DataStructureTests {
 				
 		myMap.add("five", 6);
 		Assert(myMap.get("five") == 6, 	"Tests the key 'five' maps to '6'");
+		Assert(myMap.size() == 5, "Test Hashmap.size() failed to assert 5 == " + myMap.size());
 		
 		System.out.println("All Hashmap Tests Passed");
 	}
