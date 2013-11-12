@@ -25,9 +25,20 @@ public class Linkedlist<T> implements Iterable<T> {
 	public Linkedlist() { }
 	
 	public void add(Linkedlist<T> list) {
+		
+		if (list == null) {
+			throw new InvalidStateException("Can't add a null list");
+		}
+		else if (list.size() == 0) {
+			throw new InvalidStateException("Can't add empty list");
+		}
+		else if (this.size() == 0) {
+			throw new InvalidStateException("this list is empty");
+		}
 		this.last.right = list.first;
 		list.first.left = this.last;
 		this.last = list.last;
+		size += list.size();
 	}
 	
 	public void add(T value) { // pushBack

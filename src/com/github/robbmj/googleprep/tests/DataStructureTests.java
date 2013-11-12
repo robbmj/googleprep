@@ -15,8 +15,6 @@ import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
-import com.github.robbmj.googleprep.datastructures.graphs.ChessPeice;
-import com.github.robbmj.googleprep.datastructures.graphs.ChessSquare;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
 
@@ -72,30 +70,7 @@ public final class DataStructureTests {
 		
 		//System.out.println(graph);
 	}
-	
-/*	public static void testFoo() {
-		EdgeListGraph<ChessSquare<ChessPeice>> e = new EdgeListGraph<>();
 		
-		e.createVertex(new ChessSquare<>(new ChessPeice("K")));
-		
-		String[] cols = { "A", "B", "C", "D", "E", "F", "G", "H" };
-		int[] rows = {1,2,3,4,5,6,7,8};
-		
-		Hashmap<String, Vertex<ChessSquare<ChessPeice>>> board = new Hashmap<>();
-		
-		for (int i = 0; i < rows.length; i++) {
-			for (int j = 0; j < rows.length; j++) {
-				
-				Vertex<ChessSquare<ChessPeice>> pos = e.createVertex(new ChessSquare<>());
-				board.add(key, value)
-				
-			}
-		}
-		System.out.println(e);
-		// Vertex<ChessSquare> v1 = new Vertex<ChessSquare>(new ChessSquare());
-		
-	}*/
-	
 	public static void testQueue() {
 		Queue<Integer> queue = new Queue<>();
 		
@@ -112,11 +87,6 @@ public final class DataStructureTests {
 		Assert(queue.size() == 0, "Test queue.size() == 0");
 		
 		System.out.println("All Queue Tests Passed");
-		
-		
-		
-		
-		
 	}
 	
 	public static void testStack() {
@@ -169,7 +139,7 @@ public final class DataStructureTests {
 		list.delete("John");
 		Assert(!list.contains("John"), "Testing list.delete(T): list conations the value 'John'");
 		
-		// TODO when i written insert test it here
+		// TODO when i have written insert test it here
 		
 		for (int i = tests.length - 1; i >= 0; i--) {
 			if (tests[i].equals("John") || tests[i].equals("Victoria")) {
@@ -219,8 +189,7 @@ public final class DataStructureTests {
 		}
 		
 		Assert(threw, "Calling removeBack() on empty list did not throw exception");
-		threw = false;
-		
+			
 		System.out.println("All Linkedlist Tests Passed");
 	}
 	
