@@ -3,7 +3,7 @@ package com.github.robbmj.googleprep.algorithms.chess;
 import com.github.robbmj.googleprep.datastructures.Point;
 
 public class ChessSquare {
-	 Point position;
+	private Point position;
 	private ChessPeice ocupant;
 	
 	public ChessSquare(Point v) {
