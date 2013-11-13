@@ -2,8 +2,14 @@
 
 package com.github.robbmj.googleprep.algorithms;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+
+import com.github.robbmj.googleprep.datastructures.Hashmap;
 
 public class RandomProblems {
 
@@ -112,5 +118,67 @@ public class RandomProblems {
 	
 	public static String[] mediaTable(String[] medals) {
 		return null;
+	}
+	
+	// http://community.topcoder.com/stat?c=problem_statement&pm=3080&rd=6518
+	public static String latestTime(int[] departure, int[] walking, int[] driving) {
+		
+		int smallestSoFar = Integer.MAX_VALUE;
+						
+		for (int i = 0; i < departure.length; i++) {
+			
+			for (int j = 1; j <= 5; j++) {
+				int travelTime = (departure[i] * j) + walking[i] + driving[i];
+				
+				if (travelTime < smallestSoFar) {
+					smallestSoFar = travelTime;
+				}
+			}
+			
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date d = null;
+		
+		try {
+			d = sdf.parse("19/11/2013 14:30:00");	
+		} catch (ParseException e) { }
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, -smallestSoFar);
+		sdf = new SimpleDateFormat("hh:mm");
+		return sdf.format(cal.getTime()).toString();
+	}
+	
+	// http://community.topcoder.com/stat?c=problem_statement&pm=12816
+	public static int count(int[] a, int[] b, int n) {
+		
+		int c = 0;
+		int ta;
+		
+		Hashmap<Integer, Boolean> map = new Hashmap<>((int)Math.sqrt(n));
+		for (int j = 0; j < a.length; j++) {
+			
+			if (a[j] == b[j] || a[j] > n || b[j] > n) {
+				continue;
+			}
+			
+			for (int i = 1; i <= n / 2; i++) {
+							
+				ta = a[j] * i;
+							
+				if (ta > n) {
+					break;
+				}
+				
+				if (ta % b[j] != 0 && map.get(ta) == null) {
+					map.add(ta, true);
+					c++;
+				}
+			}
+		}
+		
+		return c;
 	}
 }

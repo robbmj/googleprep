@@ -15,6 +15,7 @@ import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
+import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
 
@@ -213,6 +214,23 @@ public final class DataStructureTests {
 		myMap.add("five", 6);
 		Assert(myMap.get("five") == 6, 	"Tests the key 'five' maps to '6'");
 		Assert(myMap.size() == 5, "Test Hashmap.size() failed to assert 5 == " + myMap.size());
+		
+		// immutable iterator test
+		Hashmap<String, Linkedlist<String>> iteratorTest = new Hashmap<>();
+		Linkedlist<String> test = new Linkedlist<>();
+		test.add("mike");
+		iteratorTest.add("mike", test);
+		
+		// test to make sure that we can keep track of objects in the map when there value changes
+		Assert(iteratorTest.get("mike").size() == 1, "Failed asserting size() 1 == " + iteratorTest.size());
+		test.add("robb");
+		Assert(iteratorTest.get("mike").size() == 2, "Failed asserting size() 2 == " + iteratorTest.size());
+		
+		for (Entry<String, Linkedlist<String>> e : iteratorTest.getIterator()) {
+			e.value = new Linkedlist<String>();
+			e.key = "robb";
+		}
+		Assert(iteratorTest.get("mike").size() == 2, "Failed asserting size() 2 == " + iteratorTest.size());
 		
 		System.out.println("All Hashmap Tests Passed");
 	}

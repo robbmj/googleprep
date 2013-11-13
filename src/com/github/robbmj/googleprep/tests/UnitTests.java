@@ -2,6 +2,7 @@
 
 package com.github.robbmj.googleprep.tests;
 
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testLatestTime;
 import static com.github.robbmj.googleprep.tests.AlgorithmTests.testFastKnight;
 import static com.github.robbmj.googleprep.tests.AlgorithmTests.testKarpRabin;
 import static com.github.robbmj.googleprep.tests.AlgorithmTests.testLessThan;
@@ -13,17 +14,24 @@ import static com.github.robbmj.googleprep.tests.DataStructureTests.testMaxHeap;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testMinHeap;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testQueue;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testStack;
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testAttackPositions;
+
+
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testCount;
 
 public final class UnitTests {
 
 	public static void runAllTests() {
 		
-				
+		testCount();
+		
+		//testLatestTime();
+		
+		//System.exit(0);
+		testAttackPositions();
 		testFastKnight();
 		testKarpRabin();
 		testLessThan();
-		
-		System.exit(0);
 		
 		testGraph();
 		testQueue();

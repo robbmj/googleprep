@@ -2,12 +2,14 @@ package com.github.robbmj.googleprep.algorithms.chess;
 
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.datastructures.Hashmap;
+import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.Point;
 import com.github.robbmj.googleprep.datastructures.Queue;
 
 public class GeneralChess {
 
+	// http://community.topcoder.com/stat?c=problem_statement&pm=2915&rd=5853 TODO test with sample data
 	public static int fastKnight(Point start, Point pawn1, Point pawn2) {
 		
 		int boardSize = 8;
@@ -49,17 +51,41 @@ public class GeneralChess {
 		shortestPath.removeBack();
 		shortestPath.add(path3);
 		
-		/*for (Point step : shortestPath) {
+		for (Point step : shortestPath) {
 			print(board, new Knight(step, Team.BLACK));
 			System.out.println("\t" + step);
-		}*/
+		}
 		
 		return shortestPath.size() - 1;
 	}
 	
-	public static Linkedlist<Point> attackPositions(Point[] points) {
-		Linkedlist<Point> knightPositions = new Linkedlist<>();
+	// http://community.topcoder.com/stat?c=problem_statement&pm=2430&rd=5072
+	public static Linkedlist<String> attackPositions(Point[] points, int boardSize) {
+		Linkedlist<String> knightPositions = new Linkedlist<>();
+		Hashmap<String, Integer> set = new Hashmap<>();
 		
+		for (Point p : points) {
+			Knight k = new Knight(p, Team.WHITE);
+			
+			Linkedlist<Point> legalMoves = k.legalMoves(boardSize, true);
+			
+			for (Point lm : legalMoves) {
+				if (set.get(lm.toString()) == null) {
+					set.add(lm.toString(), 1);
+				}
+				else {
+					int timesOccured = set.get(lm.toString());
+					set.add(lm.toString(), ++timesOccured);
+				}
+			}
+		}
+		
+		for (Entry<String, Integer> e : set.getIterator()) {
+			if (e.value == points.length) {
+				knightPositions.add(e.key);
+			}
+		}
+				
 		return knightPositions;
 	}
 	

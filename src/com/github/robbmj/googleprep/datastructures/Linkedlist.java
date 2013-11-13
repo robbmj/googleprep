@@ -171,6 +171,25 @@ public class Linkedlist<T> implements Iterable<T> {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object l) {
+		
+		if (!(l instanceof Linkedlist)) return false;
+		
+		if (this.size() != ((Linkedlist<T>)l).size()) return false;
+		
+		Node current = this.first;
+		for (T val : (Linkedlist<T>)l) {
+			if (!val.equals(current.value)) {
+				return false;
+			}
+			current = current.right;
+		}
+		return true;
+	}
+	
+	@Override
 	public String toString() {
 		
 		if (size() == 0) {

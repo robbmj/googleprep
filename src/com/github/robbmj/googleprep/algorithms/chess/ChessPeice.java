@@ -37,7 +37,7 @@ public abstract class ChessPeice implements IChessPeice {
 		this.position = position;
 	}
 	
-	public static boolean isInBounds(Point p, int boardSize) {
+	public boolean isInBounds(Point p, int boardSize) {
 		return (p.x >= 0 && p.x < boardSize) && 
 			   (p.y >= 0 && p.y < boardSize); 
 	}

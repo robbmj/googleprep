@@ -3,6 +3,7 @@
 package com.github.robbmj.googleprep.datastructures;
 
 import java.math.BigInteger;
+import java.util.Iterator;
 
 // Hashmap with chaining
 public final class Hashmap<K, V> {
@@ -41,6 +42,7 @@ public final class Hashmap<K, V> {
 	
 	@SuppressWarnings("unchecked")
 	public void add(K key, V value) {
+
 		int pos = uHash(key);
 		
 		ListNode node = new ListNode(key, value);
@@ -126,5 +128,67 @@ public final class Hashmap<K, V> {
 				}
 			}
 		}
+	}
+	
+	public Iterate getIterator() {
+		return new Iterate();
+	}
+		
+	public static class Entry<K, V> {
+
+		public K key;
+		public V value;
+		
+		public Entry(K key, V value) {
+			this.key = key;
+			this.value = value;
+		}
+	}
+	
+	public class Iterate implements Iterable<Entry<K, V>> {
+
+		@Override
+		public Iterator<Entry<K, V>> iterator() {
+			return new MapIterator();
+		}
+		
+	}
+	
+	class MapIterator implements java.util.Iterator<Entry<K, V>> {
+
+		private Object[] entries;
+		private int entriesReturned;
+		
+		@SuppressWarnings("unchecked")
+		public MapIterator() {
+			entriesReturned = 0;
+			entries = new Object[Hashmap.this.size()];
+			
+			int inserted = 0;
+			
+			for (int i = 0; i < map.length; i++) {
+				if (map[i] != null) {
+					for (ListNode node : (Linkedlist<ListNode>)map[i]) {
+						entries[inserted++] = new Entry<K, V>(node.key, node.value);
+						//entries.add(new Entry<K, V>(node.key, node.value));
+					}
+				}
+			}
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return entriesReturned < entries.length;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Entry<K, V> next() {
+			return (Entry<K, V>)entries[entriesReturned++];
+		}
+
+		@Override
+		public void remove() { }
+		
 	}
 }
