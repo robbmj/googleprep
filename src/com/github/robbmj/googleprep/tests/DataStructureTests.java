@@ -17,6 +17,7 @@ import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
 import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
+import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Path;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
 
 
@@ -57,21 +58,34 @@ public final class DataStructureTests {
 		EdgeListGraph<String> graph = muskokaTestData();
 		
 		Hashmap<String, Vertex<String>> map = graph.getNodes();
-		/*
-		graph.bredthFirstSearch(map.get("Baysville"));
 		
-		System.out.println("--------------------------------");
+		Path<String> p;
 		
-		graph.depthFirstSearch(map.get("Bala"));
-				
-		System.out.println("--------------------------------");*/
-		System.out.println(graph.shortestPath(map.get("Bracebridge"), map.get("Mactier")));
+		p = graph.shortestPath(map.get("Bracebridge"), map.get("Mactier"));
+		Assert(p.getTotalWeight() == 76, "Failed shortest path 76 == " + p.getTotalWeight());
+		
+		p = graph.shortestPath(map.get("Baysville"), map.get("Bala"));
+		Assert(p.getTotalWeight() == 37, "Failed shortest path 37 == " + p.getTotalWeight());
+		
+		p = graph.shortestPath(map.get("Port Sydney"), map.get("Huntsville"));
+		Assert(p.getTotalWeight() == 70, "Failed shortest path 70 == " + p.getTotalWeight());
+		
+		p = graph.shortestPath(map.get("Huntsville"), map.get("Port Sydney"));
+		Assert(p == null, "Failed shortest path null == " + p);
+		
+		System.out.println("All Graph Tests Passed");
 
-	//	Vertex
-		
-		//System.out.println(graph);
 	}
 		
+	public static void testMinSpanningTree() {
+		EdgeListGraph<String> g = muskokaTestData();
+		Hashmap<String, Vertex<String>> map = g.getNodes();
+		Path p;
+		//p = g.minimumSpanningTree(map.get("Baysville"));
+		p = g.minimumSpanningTree(map.get("Bracebridge"));
+		System.out.println(p);
+	}
+	
 	public static void testQueue() {
 		Queue<Integer> queue = new Queue<>();
 		

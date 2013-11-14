@@ -29,9 +29,9 @@ package com.github.robbmj.googleprep.datastructures.graphs;
  */
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.github.robbmj.googleprep.datastructures.Hashmap;
+import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.Queue;
 import com.github.robbmj.googleprep.datastructures.Stack;
@@ -69,13 +69,12 @@ public class EdgeListGraph<T>  {
 		return map;
 	}
 	
-	public List<Vertex<T>> shortestPath(Vertex<T> v1, Vertex<T> v2) {
+	public Path<T> shortestPath(Vertex<T> v1, Vertex<T> v2) {
 					
-		ArrayList<Vertex<T>> path = new ArrayList<>();
+		Linkedlist<Vertex<T>> path = new Linkedlist<>();
 		
 		if (v1.equals(v2)) {
-			path.add(v1);
-			return path;
+			return null;
 		}
 		
 		Queue<Vertex<T>> nodesToVisit = new Queue<>();
@@ -119,7 +118,7 @@ public class EdgeListGraph<T>  {
 		}
 		
 		Vertex<T> backTracker = v2;
-				
+		
 		do {
 			path.add(backTracker);
 			backTracker = previous.get(backTracker);
@@ -130,9 +129,48 @@ public class EdgeListGraph<T>  {
 			return null;
 		}
 		
-		return path;
+		return new Path<T>(path);
 	}
 
+	public Path<T> minimumSpanningTree(Vertex<T> start) {
+		
+		Hashmap<Vertex<T>, Boolean> map = new Hashmap<>();		
+		map.add(start, true);
+		
+		Edge<T> shortest = shortestDist(map);
+				
+		Path<T> p = new Path<>();
+		
+		while (map.size() < nodes.size() && shortest != null) {
+						
+			p.addEdge(shortest);
+			
+			map.add(shortest.getDestination(), true);
+			map.add(shortest.getSource(), true);
+			
+			shortest = shortestDist(map);
+		}
+		return p;
+	}
+	
+	private Edge<T> shortestDist(Hashmap<Vertex<T>, Boolean> visited) {
+		
+		Edge<T> candidate = null;
+		int minWeight = Integer.MAX_VALUE;
+		
+		for (Entry<Vertex<T>, Boolean> e : visited.getIterator()) {
+						
+			for (Edge<T> edge : e.key.getEdges()) {
+				
+				if (visited.get(edge.getDestination()) == null && edge.getWeight() < minWeight) {
+					minWeight = edge.getWeight();
+					candidate = edge;
+				}	
+			}
+		}
+		return candidate;
+ 	}
+	
 	public Linkedlist<Edge<T>> adjacentVertices(Vertex<T> v) {
 		return v.getEdges();
 	}
@@ -227,6 +265,20 @@ public class EdgeListGraph<T>  {
 		public boolean equals(Object v) {
 			return this == v;
 		}
+		
+		public Vertex<T> nearestNeighbor() {
+			
+			Edge<T> nearest = null;
+			
+			for (Edge<T> e : getEdges()) {
+				if (nearest == null || e.getWeight() < nearest.getWeight()) {
+					nearest = e;
+				}
+			}
+			
+			return nearest.getDestination();
+		}
+		
 		
 		public void addAdjacentVertex(Vertex<T> v, int weigth, boolean directed) {
 			
@@ -333,5 +385,57 @@ public class EdgeListGraph<T>  {
 			
 			return true;
 		}
+		
+		@Override
+		public String toString() {
+			if (isDirected()) {
+				return destination.getLabel() + " -- " + weight + " -> " + source.getLabel();
+			}
+			return destination.getLabel() + " <- " + weight + " -> " + source.getLabel();
+		}
+	}
+	
+	public static class Path<T> {
+		private Linkedlist<Edge<T>> path = new Linkedlist<>();
+		private int totalWeight = 0;
+		
+		public Path() {}
+		
+		public Path(Linkedlist<Vertex<T>> path) {
+			
+			Vertex<T> p = null;
+			
+			for (Vertex<T> v : path) {
+			
+				if (p != null) {
+					for (Edge<T> e : v.getEdges()) {
+						if (p.equals(e.getDestination())) {
+							this.path.add(e);
+							totalWeight += e.getWeight();
+						}
+					}
+				}
+				p = v;
+			}
+		}
+		
+		public void addEdge(Edge<T> e) {
+			this.path.add(e);
+			this.totalWeight += e.getWeight();
+		}
+		
+		public Linkedlist<Edge<T>> getPath() {
+			return path;
+		}
+		
+		public int getTotalWeight() {
+			return totalWeight;
+		}
+		
+		@Override
+		public String toString() {
+			return path.toString() + " : total weight = " + totalWeight;
+		}
+		
 	}
 }

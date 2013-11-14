@@ -60,20 +60,18 @@ public final class AlgorithmTests {
 	public static void testAttackPositions() {
 		
 		Linkedlist<String> pos;
-		
-		// TODO write assertions here
+
 		pos = attackPositions(new Point[] { new Point(2, 1), new Point(-1, -2)}, 10000);
-		//System.out.println(pos);
+		Assert(pos.size() == 2, "Assert failed attackPositions() 2 == " + pos.size());
 		
 		pos = attackPositions(new Point[] { new Point(0, 0)}, 10000);
-		//System.out.println(pos);
+		Assert(pos.size() == 8, "Assert failed attackPositions() 8 == " + pos.size());
 		
 		pos = attackPositions(new Point[] { new Point(0, 0), new Point(2, 1)}, 10000);
-		//System.out.println(pos);
+		Assert(pos.size() == 0, "Assert failed attackPositions() 0 == " + pos.size());
 		
 		pos = attackPositions(new Point[] { new Point(-1000,1000), new Point(-999,999), new Point(-999,997)}, 10000);
-		//System.out.println(pos);
-
+		Assert(pos.size() == 1, "Assert failed attackPositions() 1 == " + pos.size());
 	}
 	
 	public static void testLatestTime() {

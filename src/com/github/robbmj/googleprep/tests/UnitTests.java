@@ -15,7 +15,7 @@ import static com.github.robbmj.googleprep.tests.DataStructureTests.testMinHeap;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testQueue;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testStack;
 import static com.github.robbmj.googleprep.tests.AlgorithmTests.testAttackPositions;
-
+import static com.github.robbmj.googleprep.tests.DataStructureTests.testMinSpanningTree;
 
 import static com.github.robbmj.googleprep.tests.AlgorithmTests.testCount;
 
@@ -23,11 +23,12 @@ public final class UnitTests {
 
 	public static void runAllTests() {
 		
-		testCount();
+		testMinSpanningTree();
+		//testCount();
 		
 		//testLatestTime();
 		
-		//System.exit(0);
+		System.exit(0);
 		testAttackPositions();
 		testFastKnight();
 		testKarpRabin();

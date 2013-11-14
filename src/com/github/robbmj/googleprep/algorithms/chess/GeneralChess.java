@@ -51,10 +51,10 @@ public class GeneralChess {
 		shortestPath.removeBack();
 		shortestPath.add(path3);
 		
-		for (Point step : shortestPath) {
+		/*for (Point step : shortestPath) {
 			print(board, new Knight(step, Team.BLACK));
 			System.out.println("\t" + step);
-		}
+		}*/
 		
 		return shortestPath.size() - 1;
 	}
@@ -85,10 +85,8 @@ public class GeneralChess {
 				knightPositions.add(e.key);
 			}
 		}
-				
 		return knightPositions;
 	}
-	
 	
 	private static Linkedlist<Point> shortestPath(Point start, Point end, ChessSquare[][] board) {
 		
@@ -126,10 +124,8 @@ public class GeneralChess {
 					nodesToVisit.queue(board[boardV.x][boardV.y].getPosition());
 					distances.add(boardV, totalDist);
 					previous.add(boardV, knight.getPosition());
-					
 				}
 			}
-			
 		}
 		
 		Point backTracker = end;
