@@ -3,13 +3,18 @@
 package com.github.robbmj.googleprep.tests;
 
 import static com.github.robbmj.googleprep.Util.Assert;
+import static com.github.robbmj.googleprep.algorithms.RandomProblems.count;
 import static com.github.robbmj.googleprep.algorithms.RandomProblems.karpRabin;
 import static com.github.robbmj.googleprep.algorithms.RandomProblems.latestTime;
 import static com.github.robbmj.googleprep.algorithms.RandomProblems.lessThan;
+import static com.github.robbmj.googleprep.algorithms.Sorting.mergeSort;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.attackPositions;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight;
-import static com.github.robbmj.googleprep.algorithms.RandomProblems.count;
+import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight2;
 
+import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
+import com.github.robbmj.googleprep.algorithms.chess.Knight;
+import com.github.robbmj.googleprep.algorithms.chess.Pawn;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.Point;
 
@@ -141,5 +146,33 @@ public final class AlgorithmTests {
 				  1000000000);
 		
 		System.out.println(c);*/
+	}
+	
+	public static void testMergeSort() {
+		
+		// TODO testing and asserts
+		Point[] nums = new Point[] {new Point(0, 1), new Point(0,2), new Point(0, 0) };
+		nums = mergeSort(nums);
+		
+		// System.out.printf("%s, %s, %s\n", nums[0], nums[1], nums[2]);
+	}
+	
+	public static void testFastKnight2() {
+		int steps;
+		steps = fastKnight2(new Knight(new Point(0, 0), Team.BLACK),
+					new Pawn(new Point(0, 1), Team.WHITE),
+					new Pawn(new Point(7, 7), Team.WHITE),
+					new Pawn(new Point(2, 4), Team.WHITE));
+		
+		steps = fastKnight2(new Knight(new Point(0, 2), Team.BLACK),
+				new Pawn(new Point(0, 1), Team.WHITE),
+				new Pawn(new Point(7, 7), Team.WHITE),
+				new Pawn(new Point(2, 4), Team.WHITE),
+				new Pawn(new Point(3, 4), Team.WHITE),
+				new Pawn(new Point(4, 3), Team.WHITE),
+				new Pawn(new Point(0, 7), Team.WHITE));
+		
+		
+		System.out.println("All Fast Knight 2 tests passed");
 	}
 }

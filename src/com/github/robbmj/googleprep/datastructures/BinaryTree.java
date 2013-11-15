@@ -2,7 +2,6 @@
 
 package com.github.robbmj.googleprep.datastructures;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class BinaryTree<T extends Comparable<T>> {
@@ -18,9 +17,9 @@ public class BinaryTree<T extends Comparable<T>> {
 		this.parent = parent;
 	}
 	
-	public BinaryTree(List<T> values) {
+	public BinaryTree(Linkedlist<T> values) {
 		
-		this (values.remove(0), null);
+		this (values.removeFront(), null);
 		
 		for (T newValue : values) {
 			this.add(newValue);
@@ -47,6 +46,24 @@ public class BinaryTree<T extends Comparable<T>> {
 				this.left.add(newValue);
 			}
 		}
+	}
+	
+	public boolean contains(T value) {
+		int c = this.value.compareTo(value);
+		if (c == 0) {
+			return true;
+		}
+		else if (c > 0) {
+			if (this.left != null) {
+				return this.left.contains(value);
+			}
+		}
+		else {
+			if (this.right != null) {
+				return this.right.contains(value);
+			}
+		}
+		return false;
 	}
 	
 	public void traverse(TreeCallback<T> cb) throws Exception {
@@ -77,7 +94,7 @@ public class BinaryTree<T extends Comparable<T>> {
 
 		protected T nodeValue;
 		
-		public void setNodeValue(T nodeValue) {
+		public final void setNodeValue(T nodeValue) {
 			this.nodeValue = nodeValue;
 		}
 	}

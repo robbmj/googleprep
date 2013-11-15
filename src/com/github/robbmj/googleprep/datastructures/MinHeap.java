@@ -1,10 +1,8 @@
 package com.github.robbmj.googleprep.datastructures;
 
-import java.util.ArrayList;
-
 public final class MinHeap<T extends Comparable<T>> extends Heap<T> {
 
-	public MinHeap(ArrayList<T> values) {
+	public MinHeap(Linkedlist<T> values) {
 		for (T value: values) {
 			add(value);
 		}
@@ -23,6 +21,8 @@ public final class MinHeap<T extends Comparable<T>> extends Heap<T> {
 		return obj;
 	}
 
+	
+	
 	@Override
 	protected void heapifyUp(int index) {
 		if (index == 0) {

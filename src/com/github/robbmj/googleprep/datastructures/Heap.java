@@ -35,6 +35,13 @@ public abstract class Heap<T extends Comparable<T>> {
 		return obj;
 	}
 	
+	public T peek() {
+		if (this.heap.size() == 0) {
+			return null;
+		}
+		return this.heap.get(0);
+	}
+	
 	public void print() {
 		System.out.println(heap);
 	}

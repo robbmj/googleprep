@@ -1,10 +1,8 @@
 package com.github.robbmj.googleprep.datastructures;
 
-import java.util.ArrayList;
-
 public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 
-	public MaxHeap(ArrayList<T> values) {
+	public MaxHeap(Linkedlist<T> values) {
 		
 		for (T value: values) {
 			add(value);

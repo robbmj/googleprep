@@ -4,18 +4,18 @@ package com.github.robbmj.googleprep.tests;
 
 import static com.github.robbmj.googleprep.Util.Assert;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.github.robbmj.googleprep.datastructures.BinaryTree;
 import com.github.robbmj.googleprep.datastructures.Hashmap;
+import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.InvalidStateException;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Queue;
+import com.github.robbmj.googleprep.datastructures.Slice;
 import com.github.robbmj.googleprep.datastructures.Stack;
-import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Path;
 import com.github.robbmj.googleprep.datastructures.graphs.EdgeListGraph.Vertex;
@@ -80,10 +80,11 @@ public final class DataStructureTests {
 	public static void testMinSpanningTree() {
 		EdgeListGraph<String> g = muskokaTestData();
 		Hashmap<String, Vertex<String>> map = g.getNodes();
-		Path p;
+		Path<String> p;
 		//p = g.minimumSpanningTree(map.get("Baysville"));
 		p = g.minimumSpanningTree(map.get("Bracebridge"));
-		System.out.println(p);
+		Assert(p.getTotalWeight() == 108, "Failed minSpanningTree 108 == " + p.getTotalWeight());
+		
 	}
 	
 	public static void testQueue() {
@@ -251,7 +252,7 @@ public final class DataStructureTests {
 	
 	public static void testBTree() {
 		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
-		ArrayList<Integer> ints = new ArrayList<>(Arrays.asList(tests));
+		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
 		
 		BinaryTree<Integer> bTree = new BinaryTree<>(ints);
 		
@@ -272,7 +273,7 @@ public final class DataStructureTests {
 	
 	public static void testMaxHeap() {
 		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
-		ArrayList<Integer> ints = new ArrayList<>(Arrays.asList(tests));
+		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
 		
 		Arrays.sort(tests);
 		
@@ -288,7 +289,7 @@ public final class DataStructureTests {
 	
 	public static void testMinHeap() {
 		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
-		ArrayList<Integer> ints = new ArrayList<>(Arrays.asList(tests));
+		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
 		
 		Arrays.sort(tests);
 		
@@ -299,5 +300,30 @@ public final class DataStructureTests {
 			Assert(top == tests[i], "Testing MinHeap, heap removing in non asending order: " + top + " != " + tests[i]);
 		}
 		System.out.println("All MinHeap Tests Passed");
+	}
+	
+	public static void testSlice() {
+		Slice<Integer> ints = new Slice<>(Integer.class, 1);
+		
+		for (int i = 1; i < 32; i++) {
+			ints.add(i);
+			Assert(ints.size() == i, "Failed assert slice.size() " + i + " == " + ints.size());
+		}
+		
+		ints.insert(0, 0);
+		
+		int i = 0;
+		
+		for (int n : ints) {
+			Assert(n == i++, "Failed asserting slice " + i + " == " + i);
+		}
+		
+		int size = ints.size();
+		
+		for (i = 0; i < size; i++) {
+			int temp = ints.remove(0);
+			Assert(temp == i, "Failed slice.remove() " + i +" == " + temp);
+			Assert(ints.size() == size - i - 1, "Failed asserting ints.size() " + ints.size() + " == " + (size - i));
+		}
 	}
 }

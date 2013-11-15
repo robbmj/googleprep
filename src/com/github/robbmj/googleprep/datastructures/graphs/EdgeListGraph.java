@@ -201,7 +201,6 @@ public class EdgeListGraph<T>  {
 				}
 			}
 		}
-		
 	}
 
 	public void depthFirstSearch(Vertex<T> start) {

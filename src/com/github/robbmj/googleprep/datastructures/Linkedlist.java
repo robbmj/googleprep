@@ -3,6 +3,7 @@
 package com.github.robbmj.googleprep.datastructures;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class Linkedlist<T> implements Iterable<T> {
 
@@ -23,6 +24,13 @@ public class Linkedlist<T> implements Iterable<T> {
 	}
 	
 	public Linkedlist() { }
+	
+	// just so that I have the convenient Arrays.asList() constructor
+	public Linkedlist(List<T> l) {
+		for (T t : l) {
+			add(t);
+		}
+	}
 	
 	public void add(Linkedlist<T> list) {
 		

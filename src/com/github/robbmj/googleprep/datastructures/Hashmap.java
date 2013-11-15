@@ -130,6 +130,18 @@ public final class Hashmap<K, V> {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		if (this.size() == 0) {
+			return "[]";
+		}
+		String s = "[";
+		for (Entry<K, V> e : this.getIterator()) {
+			s += e + ", ";
+		}
+		return s.substring(0, s.length() - 2) + "]";
+	}
+	
 	public Iterate getIterator() {
 		return new Iterate();
 	}
@@ -142,6 +154,11 @@ public final class Hashmap<K, V> {
 		public Entry(K key, V value) {
 			this.key = key;
 			this.value = value;
+		}
+		
+		@Override
+		public String toString() {
+			return "<" + key + ", " + value + ">";
 		}
 	}
 	

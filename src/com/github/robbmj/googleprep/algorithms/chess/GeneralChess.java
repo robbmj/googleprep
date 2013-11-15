@@ -1,9 +1,12 @@
 package com.github.robbmj.googleprep.algorithms.chess;
 
+import java.util.Arrays;
+
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.datastructures.Hashmap;
 import com.github.robbmj.googleprep.datastructures.Hashmap.Entry;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
+import com.github.robbmj.googleprep.datastructures.MinHeap;
 import com.github.robbmj.googleprep.datastructures.Point;
 import com.github.robbmj.googleprep.datastructures.Queue;
 
@@ -59,6 +62,22 @@ public class GeneralChess {
 		return shortestPath.size() - 1;
 	}
 	
+	public static int fastKnight2(Knight start, Pawn... pawns) {
+		ChessSquare[][] board = new ChessSquare[8][8];
+		initBoard(board, pawns);
+		
+		Linkedlist<Point> shortestPath = shortestPath(start.getPosition(), pawns, board);
+		initBoard(board, pawns);
+		
+		/*for (Point step : shortestPath) {
+			print(board, new Knight(step, Team.BLACK));
+			System.out.println("\t" + step);
+		}*/
+				
+		return shortestPath.size() - 1;
+	}
+	
+	
 	// http://community.topcoder.com/stat?c=problem_statement&pm=2430&rd=5072
 	public static Linkedlist<String> attackPositions(Point[] points, int boardSize) {
 		Linkedlist<String> knightPositions = new Linkedlist<>();
@@ -88,6 +107,89 @@ public class GeneralChess {
 		return knightPositions;
 	}
 	
+	private static Linkedlist<Point> shortestPath(Point start, Pawn[] pawns , ChessSquare[][] board) {
+		
+		Queue<Point> nodesToVisit = new Queue<>();
+		
+		Point knightPos = start;
+		
+		nodesToVisit.queue(knightPos);
+		
+		Hashmap<Point, Boolean> visited = new Hashmap<>();
+		Hashmap<Point, Integer> distances = new Hashmap<>();
+		Hashmap<Point, Point> previous = new Hashmap<>();
+		
+		Linkedlist<Point> listPath = null;
+		int numCaptured = 0;
+		
+		while (nodesToVisit.size() > 0) {
+			
+			knightPos = nodesToVisit.dequeue();
+		
+			if (board[knightPos.x][knightPos.y].isOccupied() &&
+				board[knightPos.x][knightPos.y].getOcupant() instanceof Pawn) {
+				
+				board[knightPos.x][knightPos.y].setOcupant(null);
+				
+				if (listPath == null) {
+					listPath = convert(previous, knightPos);
+				}
+				else {
+					listPath.removeBack();
+					listPath.add(convert(previous, knightPos));
+				}
+				
+				numCaptured++;
+				
+				if (numCaptured == pawns.length) {
+					break;
+				}
+				
+				visited = new Hashmap<>();
+				distances = new Hashmap<>();
+				previous = new Hashmap<>();
+				nodesToVisit = new Queue<>();
+			}
+			
+			visited.add(knightPos, true);
+									
+			Knight knight = new Knight(knightPos, Team.BLACK);
+			
+			Linkedlist<Point> nextMoves = knight.legalMoves(board);
+						
+			for (Point v : nextMoves) {
+				
+				Point boardV = board[v.x][v.y].getPosition();
+				
+				Integer dist = distances.get(knightPos);
+				
+				int totalDist = dist == null ? 1 : dist + 1;
+				
+				boolean isShorter = distances.get(boardV) == null ? true : totalDist < distances.get(boardV);
+									
+				if (isShorter && visited.get(boardV) == null) {
+					nodesToVisit.queue(board[boardV.x][boardV.y].getPosition());
+					distances.add(boardV, totalDist);
+					previous.add(boardV, knight.getPosition());
+				}
+			}
+		}
+		
+		return listPath;
+	}
+
+	private static Linkedlist<Point> convert(Hashmap<Point, Point> path, Point end) {
+		
+		Linkedlist<Point> listPath = new Linkedlist<>();
+		
+		do {
+			listPath.pushFront(end);
+			end = path.get(end);
+		} while (end != null);
+		
+		return listPath;
+	}
+		
 	private static Linkedlist<Point> shortestPath(Point start, Point end, ChessSquare[][] board) {
 		
 		Queue<Point> nodesToVisit = new Queue<>();
@@ -139,7 +241,30 @@ public class GeneralChess {
 		return path;
 	}
 	
-	static void print(ChessSquare[][] data, ChessPeice k) {
+	private static void initBoard(ChessSquare[][] board, ChessPeice... positions) {
+				
+		Linkedlist<ChessPeice> points = new Linkedlist<>(Arrays.asList(positions));
+		MinHeap<ChessPeice> min = new MinHeap<>(points);
+		
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				
+				ChessPeice cp = min.peek();
+				Point p = new Point(i, j);
+				
+				if (cp != null) {
+					if (cp.getPosition().x == i && cp.getPosition().y == j) {
+						board[i][j] = new ChessSquare(p, cp);
+						min.remove();
+						continue;
+					}
+				}
+				board[i][j] = new ChessSquare(p, null);
+			}
+		}
+	}
+		
+	public static void print(ChessSquare[][] data, ChessPeice k) {
 		for (int i = 0; i < data.length; i++) {
 			System.out.println("");
 			System.out.print("|");
