@@ -12,6 +12,10 @@ public class BinaryTree<T extends Comparable<T>> {
 	private BinaryTree<T> parent; // it is used
 	private T value;
 	
+	public BinaryTree(T value) {
+		this (value, null);
+	}
+	
 	public BinaryTree(T value, BinaryTree<T> parent) {
 		this.value = value;
 		this.parent = parent;

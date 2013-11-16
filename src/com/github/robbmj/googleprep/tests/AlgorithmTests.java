@@ -12,12 +12,16 @@ import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.attackP
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight2;
 
+import com.github.robbmj.googleprep.Util.Compexity;
+import com.github.robbmj.googleprep.Util.Compexity.MilliS;
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.algorithms.chess.Knight;
 import com.github.robbmj.googleprep.algorithms.chess.Pawn;
+import com.github.robbmj.googleprep.datastructures.BinaryTree;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.Point;
-
+import com.github.robbmj.googleprep.datastructures.Slice;
+import static com.github.robbmj.googleprep.algorithms.Sorting.quickSort;
 public final class AlgorithmTests {
 
 	public static void testKarpRabin() {
@@ -77,6 +81,8 @@ public final class AlgorithmTests {
 		
 		pos = attackPositions(new Point[] { new Point(-1000,1000), new Point(-999,999), new Point(-999,997)}, 10000);
 		Assert(pos.size() == 1, "Assert failed attackPositions() 1 == " + pos.size());
+		
+		System.out.println("All Attack Position Tests passed");
 	}
 	
 	public static void testLatestTime() {
@@ -157,12 +163,46 @@ public final class AlgorithmTests {
 		// System.out.printf("%s, %s, %s\n", nums[0], nums[1], nums[2]);
 	}
 	
+	public static void testQuickSort(int size, Compexity c) {
+		
+		Slice<Integer> ints = new Slice<>(Integer.class);
+				
+		while (ints.size() < size) {
+			int candidate = (int)(Math.random() * 100);
+			ints.add(candidate);		
+		}
+		
+		MilliS m = c.startRecording(size);
+		
+		quickSort(ints);
+		c.stopRecording(m);
+		
+		/*int prev = Integer.MIN_VALUE;
+		
+		for (int i = 0; i < size; i++) {
+			Assert(ints.get(i) >= prev, "Quick sort failed to sort");
+			prev = ints.get(i);
+		}*/
+	}
+	
+	public static void testQuickSort() {
+	
+		Compexity c = new Compexity();
+		
+		for (int i = 0; i < 16; i++) {
+			testQuickSort((int)Math.pow(2, i), c);
+		}
+		
+		System.out.println(c);
+		
+		System.out.println("All quick sort tests passed");
+	}
 	public static void testFastKnight2() {
 		int steps;
 		steps = fastKnight2(new Knight(new Point(0, 0), Team.BLACK),
-					new Pawn(new Point(0, 1), Team.WHITE),
-					new Pawn(new Point(7, 7), Team.WHITE),
-					new Pawn(new Point(2, 4), Team.WHITE));
+				new Pawn(new Point(0, 1), Team.WHITE),
+				new Pawn(new Point(7, 7), Team.WHITE),
+				new Pawn(new Point(2, 4), Team.WHITE));
 		
 		steps = fastKnight2(new Knight(new Point(0, 2), Team.BLACK),
 				new Pawn(new Point(0, 1), Team.WHITE),

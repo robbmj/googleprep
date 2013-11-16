@@ -325,5 +325,7 @@ public final class DataStructureTests {
 			Assert(temp == i, "Failed slice.remove() " + i +" == " + temp);
 			Assert(ints.size() == size - i - 1, "Failed asserting ints.size() " + ints.size() + " == " + (size - i));
 		}
+		
+		System.out.println("All slice Tests passed");
 	}
 }

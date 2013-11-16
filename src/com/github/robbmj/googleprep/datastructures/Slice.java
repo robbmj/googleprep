@@ -9,6 +9,11 @@ public class Slice<T> implements Iterable<T> {
 	// look into implanting this natively
 	private T[] buffer;
 	
+	public Slice(Class<?> c) {
+		this(c, 32);
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public Slice(Class<?> c, int capacity) {
 		this.size = 0;
@@ -105,7 +110,7 @@ public class Slice<T> implements Iterable<T> {
 		}
 	}
 	
-	private void swap(int from, int to) {
+	public void swap(int from, int to) {
 		T temp = this.buffer[from];
 		this.buffer[from] = this.buffer[to];
 		this.buffer[to] = temp;
@@ -114,6 +119,19 @@ public class Slice<T> implements Iterable<T> {
 	@Override
 	public Iterator<T> iterator() {
 		return new SpliceIterator();
+	}
+	
+	@Override 
+	public String toString() {
+		String s = "[";
+		if (size() == 0) {
+			return s + "]";
+		}
+		
+		for (T t : this) {
+			s += t + ", ";
+		}
+		return s.substring(0, s.length() - 2) + "]";
 	}
 	
 	class SpliceIterator implements Iterator<T>  {
@@ -126,7 +144,7 @@ public class Slice<T> implements Iterable<T> {
 		
 		@Override
 		public boolean hasNext() {
-			return i == Slice.this.size;
+			return i < Slice.this.size;
 		}
 
 		@Override
