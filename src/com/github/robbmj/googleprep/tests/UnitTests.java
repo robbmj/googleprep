@@ -28,12 +28,7 @@ import static com.github.robbmj.googleprep.tests.DataStructureTests.testStack;
 public final class UnitTests {
 
 	public static void runAllTests() {
-		
-		testDeckSorting();
 
-		//testCountingSort();
-		//testBucketSort();
-		System.exit(0);
 		
 		testDataStructrues();
 		testAlgorithums();
@@ -57,6 +52,7 @@ public final class UnitTests {
 	public static void testAlgorithums() {
 		testBucketSort();
 		testCountingSort();
+		testDeckSorting();
 		testFastKnight2();
 		testFastKnight();
 		testAttackPositions();

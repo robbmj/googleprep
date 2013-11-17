@@ -1,10 +1,12 @@
 package com.github.robbmj.googleprep.algorithms;
 
+import java.util.Arrays;
+
 import com.github.robbmj.googleprep.datastructures.BinaryTree;
 import com.github.robbmj.googleprep.datastructures.Hashmap;
 import com.github.robbmj.googleprep.datastructures.Slice;
 
-public class PlayingCard {
+public class PlayingCardDeck {
 
 	public static final int CARDS_IN_DECK = 52;
 			
@@ -19,44 +21,43 @@ public class PlayingCard {
 		Ace
 	}
 	
-	private Suit suit;
-	private Rank rank;
+	private PlayingCard[] deck;
 	
-	public PlayingCard(Suit s, Rank r) {
-		this.suit = s;
-		this.rank = r;
+	public PlayingCardDeck() {
+		this.deck = new PlayingCard[CARDS_IN_DECK];
+		
+		int i = 0;
+		for (Suit s : Suit.values()) {
+			for (Rank r : Rank.values()) {
+				this.deck[i++] = new PlayingCard(s, r);
+			}
+		}
+	}
+	
+	public PlayingCard cardAt(int i) {
+		if (i < 0 || i >= deck.length) {
+			return null;
+		}
+		return deck[i];
 	}
 	
 	@Override
 	public String toString() {
-		return rank + " of " + suit + "\n";
+		return Arrays.toString(deck);
 	}
 	
-	public static PlayingCard[] makeDeck() {
-		PlayingCard[] deck = new PlayingCard[CARDS_IN_DECK];
-		int i = 0;
-		
-		for (Suit s : Suit.values()) {
-			for (Rank r : Rank.values()) {
-				deck[i++] = new PlayingCard(s, r);
-			}
-		}
-		
-		return deck;
-	}
-	
-	public static void shffleDeck(PlayingCard[] deck) {
+	public void shffleDeck() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < deck.length; j++) {
 				int rand = (int)(Math.random() * deck.length);
-				swap(deck, j, rand);
+				swap(j, rand);
 			}
 		}
 	}
 	
 	// it probably makes more sense to return a new sorted deck
 	@SuppressWarnings("unused")
-	private static void _sortDeckByRank(PlayingCard[] deck) {
+	private void inplaceSortByRank(PlayingCard[] deck) {
 		int[] cards = new int[Rank.values().length];
 		
 		for (PlayingCard pc : deck) {
@@ -73,7 +74,7 @@ public class PlayingCard {
 				
 		int pos = cards[deck[0].rank.ordinal()];
 		BinaryTree<Integer> bTree = new BinaryTree<>(pos);
-		swap(deck, 0, pos);
+		swap(0, pos);
 		cards[deck[0].rank.ordinal()]++;
 		int i = 0;
 		
@@ -83,7 +84,7 @@ public class PlayingCard {
 
 			if (!bTree.contains(i)) {
 				
-				swap(deck, i, pos - 1);
+				swap(i, pos - 1);
 				cards[deck[i].rank.ordinal()]++;
 				bTree.add(pos);
 				i--;
@@ -92,8 +93,7 @@ public class PlayingCard {
 		}
 	}
 	
-	// counting sort
-	public static PlayingCard[] sortByRank(PlayingCard[] deck) {
+	private static PlayingCard[] sortByRank(PlayingCard[] deck) {
 		int[] cards = new int[Rank.values().length];
 		
 		for (PlayingCard pc : deck) {
@@ -117,8 +117,13 @@ public class PlayingCard {
 		return sorted;
 	}
 	
+	// counting sort
+	public void sortByRank() {
+		this.deck = sortByRank(this.deck);
+	}
+	
 	// bucket sort first half
-	private static Hashmap<Suit, Slice<PlayingCard>> splitBySuit(PlayingCard[] deck) {
+	private Hashmap<Suit, Slice<PlayingCard>> splitBySuit() {
 		Hashmap<Suit, Slice<PlayingCard>> buckets = new Hashmap<>();
 		
 		for (PlayingCard pc : deck) {
@@ -133,9 +138,9 @@ public class PlayingCard {
 	}
 	
 	// bucket sort second half
-	public static PlayingCard[] sortBySuit(PlayingCard[] deck) {
+	public void sortBySuit() {
 				
-		Hashmap<Suit, Slice<PlayingCard>> buckets = splitBySuit(deck);
+		Hashmap<Suit, Slice<PlayingCard>> buckets = splitBySuit();
 		PlayingCard[] sorted = new PlayingCard[deck.length];
 		int filledSoFar = 0;
 		
@@ -144,28 +149,64 @@ public class PlayingCard {
 			System.arraycopy(suit, 0, sorted, filledSoFar, suit.length);
 			filledSoFar += suit.length;
 		}
-		return sorted;
+		this.deck = sorted;
 	}
 	
 	// bucket sort, then counting sort to sort the buckets
-	public static PlayingCard[] sort(PlayingCard[] deck) {
+	public void sort() {
 		
-		Hashmap<Suit, Slice<PlayingCard>> buckets = splitBySuit(deck);
+		Hashmap<Suit, Slice<PlayingCard>> buckets = splitBySuit();
 		PlayingCard[] sorted = new PlayingCard[deck.length];
 		int filledSoFar = 0;
 		
 		for (Suit s : Suit.values()) {
 			PlayingCard[] suit = buckets.get(s).toArray();
-			suit = sortByRank(suit);
+			suit= sortByRank(suit);
 			System.arraycopy(suit, 0, sorted, filledSoFar, suit.length);
 			filledSoFar += suit.length;
 		}
-		return sorted;
+		this.deck = sorted;
 	}
 	
-	private static void swap(PlayingCard[] deck, int from, int to) {
+	private void swap(int from, int to) {
 		PlayingCard temp = deck[from];
 		deck[from] = deck[to];
 		deck[to] = temp;
+	}
+	
+	public static class PlayingCard implements Comparable<PlayingCard> {
+		private Suit suit;
+		private Rank rank;
+		
+		public PlayingCard(Suit s, Rank r) {
+			this.suit = s;
+			this.rank = r;
+		}
+		
+		public Suit getSuit() {
+			return suit;
+		}
+
+		public Rank getRank() {
+			return rank;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (!(o instanceof PlayingCard)) return false;
+			return this.suit == ((PlayingCard)o).suit && 
+				   this.rank == ((PlayingCard)o).rank;
+		}
+		
+		@Override
+		public String toString() {
+			return rank + " of " + suit + "\n";
+		}
+
+		@Override
+		public int compareTo(PlayingCard o) {
+			int s = this.suit.ordinal() - o.suit.ordinal();
+			return s != 0 ? s : this.rank.ordinal() - o.rank.ordinal();
+		}
 	}
 }

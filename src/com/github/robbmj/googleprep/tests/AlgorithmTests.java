@@ -17,7 +17,10 @@ import java.util.Arrays;
 
 import com.github.robbmj.googleprep.Util.Compexity;
 import com.github.robbmj.googleprep.Util.Compexity.MilliS;
-import com.github.robbmj.googleprep.algorithms.PlayingCard;
+import com.github.robbmj.googleprep.algorithms.PlayingCardDeck;
+import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.PlayingCard;
+import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.Rank;
+import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.Suit;
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.algorithms.chess.Knight;
 import com.github.robbmj.googleprep.algorithms.chess.Pawn;
@@ -224,25 +227,50 @@ public final class AlgorithmTests {
 	}
 	
 	public static void testCountingSort() {
-		PlayingCard[] deck = PlayingCard.makeDeck();
-		PlayingCard.shffleDeck(deck);
-		deck = PlayingCard.sortByRank(deck);
-		System.out.println(Arrays.toString(deck));
+		PlayingCardDeck deck = new PlayingCardDeck();
+		deck.shffleDeck();
+		deck.sortByRank();
+		
+		int t = 0, 
+			numRanks = PlayingCardDeck.CARDS_IN_DECK / Rank.values().length;
+		
+		for (int i = 0; i < PlayingCardDeck.CARDS_IN_DECK; t++) {
+			for (int j = 0; j < numRanks; j++, i++) {
+				Assert(t == deck.cardAt(i).getRank().ordinal(), "counting sort failed");
+			}
+		}
+		
+		System.out.println("All counting sort tests passed");
 	}
 
 	public static void testBucketSort() {
-		PlayingCard[] deck = PlayingCard.makeDeck();
-		PlayingCard.shffleDeck(deck);
-		deck = PlayingCard.sortBySuit(deck);
-		System.out.println(Arrays.toString(deck));
+		PlayingCardDeck deck = new PlayingCardDeck();
+		deck.shffleDeck();
+		deck.sortBySuit();
+		int t = 0, 
+			numSuits = PlayingCardDeck.CARDS_IN_DECK / Suit.values().length;
+		
+		for (int i = 0; i < PlayingCardDeck.CARDS_IN_DECK; t++) {
+			for (int j = 0; j < numSuits; j++, i++) {
+				Assert(t == deck.cardAt(i).getSuit().ordinal(), "bucket sort failed");
+			}
+		}
+		
+		System.out.println("All bucket sort tests passed");
 	}
 	
 	public static void testDeckSorting() {
-		System.out.println("0");
-		PlayingCard[] deck = PlayingCard.makeDeck();
-		PlayingCard.shffleDeck(deck);
-		deck = PlayingCard.sort(deck);
-		System.out.println(Arrays.toString(deck));
+		PlayingCardDeck deck = new PlayingCardDeck();
+		deck.shffleDeck();
+		deck.sort();
+		PlayingCardDeck comparator = new PlayingCardDeck();
+		
+		for (int i = 0; i < PlayingCardDeck.CARDS_IN_DECK; i++) {
+			
+			Assert(deck.cardAt(i).equals(comparator.cardAt(i)),
+					"deck.sort() failed");
+		}
+		System.out.println("All bucket / counting sort tests passed");
 	}
 	
 	public static void testFastKnight2() {
