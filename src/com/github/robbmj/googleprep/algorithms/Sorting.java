@@ -61,7 +61,9 @@ public class Sorting {
 		
 		int ol = low, oh = high;
 		
-		int i = (low + high) / 2; 
+		//int i = (low + high) / 2;
+		
+		int i = (int)(Math.random() * (high - low)) + low; 
 		T pivot = c.get(i);
 		
 		while (low <= high) {
@@ -78,4 +80,6 @@ public class Sorting {
 		partition(c, ol, high);
 		partition(c, low, oh);		
 	}
+	
+	
 }

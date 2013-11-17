@@ -116,6 +116,13 @@ public class Slice<T> implements Iterable<T> {
 		this.buffer[to] = temp;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public T[] toArray() {
+		T[] a = (T[])Array.newInstance(buffer.getClass().getComponentType(), size);
+		System.arraycopy(buffer, 0, a, 0, size);
+		return a;
+	}
+	
 	@Override
 	public Iterator<T> iterator() {
 		return new SpliceIterator();

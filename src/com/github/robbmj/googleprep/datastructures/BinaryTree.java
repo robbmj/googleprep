@@ -11,6 +11,7 @@ public class BinaryTree<T extends Comparable<T>> {
 	@SuppressWarnings("unused")
 	private BinaryTree<T> parent; // it is used
 	private T value;
+	public int size = 1;
 	
 	public BinaryTree(T value) {
 		this (value, null);
@@ -50,6 +51,7 @@ public class BinaryTree<T extends Comparable<T>> {
 				this.left.add(newValue);
 			}
 		}
+		size++;
 	}
 	
 	public boolean contains(T value) {

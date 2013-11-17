@@ -8,20 +8,22 @@ import static com.github.robbmj.googleprep.algorithms.RandomProblems.karpRabin;
 import static com.github.robbmj.googleprep.algorithms.RandomProblems.latestTime;
 import static com.github.robbmj.googleprep.algorithms.RandomProblems.lessThan;
 import static com.github.robbmj.googleprep.algorithms.Sorting.mergeSort;
+import static com.github.robbmj.googleprep.algorithms.Sorting.quickSort;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.attackPositions;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight;
 import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKnight2;
 
+import java.util.Arrays;
+
 import com.github.robbmj.googleprep.Util.Compexity;
 import com.github.robbmj.googleprep.Util.Compexity.MilliS;
+import com.github.robbmj.googleprep.algorithms.PlayingCard;
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.algorithms.chess.Knight;
 import com.github.robbmj.googleprep.algorithms.chess.Pawn;
-import com.github.robbmj.googleprep.datastructures.BinaryTree;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
 import com.github.robbmj.googleprep.datastructures.Point;
 import com.github.robbmj.googleprep.datastructures.Slice;
-import static com.github.robbmj.googleprep.algorithms.Sorting.quickSort;
 public final class AlgorithmTests {
 
 	public static void testKarpRabin() {
@@ -154,14 +156,38 @@ public final class AlgorithmTests {
 		System.out.println(c);*/
 	}
 	
-	public static void testMergeSort() {
+	public static void testMergeSort(int size, Compexity c) {
+	
+		Point[] points = new Point[size];
 		
-		// TODO testing and asserts
-		Point[] nums = new Point[] {new Point(0, 1), new Point(0,2), new Point(0, 0) };
-		nums = mergeSort(nums);
+		for (int i = 0; i < size; i++) {
+			points[i] = new Point((int)(Math.random() * 200), (int)(Math.random() * 200));
+		}
 		
-		// System.out.printf("%s, %s, %s\n", nums[0], nums[1], nums[2]);
+		MilliS m = c.startRecording(size);
+		points = mergeSort(points);
+		c.stopRecording(m);
+		
+		Point prev = points[0];
+		
+		for (int i = 1; i < size; i++) {
+			Assert(prev.compareTo(points[i]) <= 0, "Merge sort failed");
+			prev = points[i];
+		}
 	}
+	
+	public static void testMergeSort() {
+		Compexity c = new Compexity();
+		
+		for (int i = 0; i < 16; i++) {
+			testMergeSort((int)Math.pow(2, i), c);
+		}
+		
+		//System.out.println(c);
+		
+		System.out.println("All merge sort tests passed");
+	}
+	
 	
 	public static void testQuickSort(int size, Compexity c) {
 		
@@ -173,16 +199,15 @@ public final class AlgorithmTests {
 		}
 		
 		MilliS m = c.startRecording(size);
-		
 		quickSort(ints);
 		c.stopRecording(m);
 		
-		/*int prev = Integer.MIN_VALUE;
+		int prev = Integer.MIN_VALUE;
 		
 		for (int i = 0; i < size; i++) {
 			Assert(ints.get(i) >= prev, "Quick sort failed to sort");
 			prev = ints.get(i);
-		}*/
+		}
 	}
 	
 	public static void testQuickSort() {
@@ -193,10 +218,33 @@ public final class AlgorithmTests {
 			testQuickSort((int)Math.pow(2, i), c);
 		}
 		
-		System.out.println(c);
+		//System.out.println(c);
 		
 		System.out.println("All quick sort tests passed");
 	}
+	
+	public static void testCountingSort() {
+		PlayingCard[] deck = PlayingCard.makeDeck();
+		PlayingCard.shffleDeck(deck);
+		deck = PlayingCard.sortByRank(deck);
+		System.out.println(Arrays.toString(deck));
+	}
+
+	public static void testBucketSort() {
+		PlayingCard[] deck = PlayingCard.makeDeck();
+		PlayingCard.shffleDeck(deck);
+		deck = PlayingCard.sortBySuit(deck);
+		System.out.println(Arrays.toString(deck));
+	}
+	
+	public static void testDeckSorting() {
+		System.out.println("0");
+		PlayingCard[] deck = PlayingCard.makeDeck();
+		PlayingCard.shffleDeck(deck);
+		deck = PlayingCard.sort(deck);
+		System.out.println(Arrays.toString(deck));
+	}
+	
 	public static void testFastKnight2() {
 		int steps;
 		steps = fastKnight2(new Knight(new Point(0, 0), Team.BLACK),
@@ -215,4 +263,6 @@ public final class AlgorithmTests {
 		
 		System.out.println("All Fast Knight 2 tests passed");
 	}
+	
+	
 }
