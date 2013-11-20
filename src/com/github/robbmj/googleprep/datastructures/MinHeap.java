@@ -46,10 +46,10 @@ public final class MinHeap<T extends Comparable<T>> extends Heap<T> {
 		int indexOfLeftChild = (index * 2) + 1;
 		int indexOfRightChild = (index * 2) + 2;
 		
-		boolean leftChildExists = indexOfLeftChild < heap.size();
-		boolean rightChildExists = indexOfRightChild < heap.size();
+		boolean leftChildExists = indexOfLeftChild < this.sortedPartition();
+		boolean rightChildExists = indexOfRightChild < this.sortedPartition();
 		
-		if (!leftChildExists && !rightChildExists && index >= heap.size()) {
+		if (!leftChildExists && !rightChildExists && index >= this.sortedPartition()) {
 			return;
 		}
 		

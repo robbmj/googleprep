@@ -274,14 +274,13 @@ public final class DataStructureTests {
 	public static void testMaxHeap() {
 		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
 		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
-		
-		Arrays.sort(tests);
-		
 		MaxHeap<Integer> heap = new MaxHeap<>(ints);
-				
+		
+		Arrays.sort(tests); // so that I can test the heap removes in descending order
+						
 		for (int i = tests.length - 1; i >= 0; i--) {
 			int top = heap.remove();
-			Assert(top == tests[i], "Testing MaxHeap, heap removing in non decending order: " + top + " != " + tests[i]);
+			Assert(top == tests[i], "Testing MaxHeap, heap removing in non descending order: " + top + " != " + tests[i]);
 		}
 		
 		System.out.println("All MaxHeap Tests Passed");
@@ -290,14 +289,13 @@ public final class DataStructureTests {
 	public static void testMinHeap() {
 		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
 		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
-		
-		Arrays.sort(tests);
-		
 		MinHeap<Integer> heap = new MinHeap<>(ints);
-				
+		
+		Arrays.sort(tests); // so that I can test the heap removes in ascending order
+						
 		for (int i = 0; i < tests.length; i++) {
 			int top = heap.remove();
-			Assert(top == tests[i], "Testing MinHeap, heap removing in non asending order: " + top + " != " + tests[i]);
+			Assert(top == tests[i], "Testing MinHeap, heap removing in non ascending order: " + top + " != " + tests[i]);
 		}
 		System.out.println("All MinHeap Tests Passed");
 	}

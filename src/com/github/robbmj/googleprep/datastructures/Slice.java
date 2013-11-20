@@ -26,13 +26,19 @@ public class Slice<T> implements Iterable<T> {
 	}
 	
 	public void insert(T value, int i) {
-		if (i < size) {
+		if (i < size && i >= 0) {
 			if (size >= capacity) {
 				doubleBuffer();
 			}
 			shiftRight(i);
 			this.buffer[i] = value;
 			size++;
+		}
+	}
+	
+	public void set(T value, int i) {
+		if (i < size && i >= 0) {
+			this.buffer[i] = value;
 		}
 	}
 	

@@ -16,17 +16,23 @@ import static com.github.robbmj.googleprep.algorithms.chess.GeneralChess.fastKni
 import java.util.Arrays;
 
 import com.github.robbmj.googleprep.Util.Compexity;
+import com.github.robbmj.googleprep.Util.Prime;
 import com.github.robbmj.googleprep.Util.Compexity.MilliS;
 import com.github.robbmj.googleprep.algorithms.PlayingCardDeck;
 import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.PlayingCard;
 import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.Rank;
 import com.github.robbmj.googleprep.algorithms.PlayingCardDeck.Suit;
+import com.github.robbmj.googleprep.algorithms.RandomProblems;
+import com.github.robbmj.googleprep.algorithms.Search;
 import com.github.robbmj.googleprep.algorithms.chess.IChessPeice.Team;
 import com.github.robbmj.googleprep.algorithms.chess.Knight;
 import com.github.robbmj.googleprep.algorithms.chess.Pawn;
 import com.github.robbmj.googleprep.datastructures.Linkedlist;
+import com.github.robbmj.googleprep.datastructures.MaxHeap;
 import com.github.robbmj.googleprep.datastructures.Point;
 import com.github.robbmj.googleprep.datastructures.Slice;
+
+
 public final class AlgorithmTests {
 
 	public static void testKarpRabin() {
@@ -194,7 +200,7 @@ public final class AlgorithmTests {
 	
 	public static void testQuickSort(int size, Compexity c) {
 		
-		Slice<Integer> ints = new Slice<>(Integer.class);
+		Slice<Integer> ints = new Slice<>(Integer.class, size);
 				
 		while (ints.size() < size) {
 			int candidate = (int)(Math.random() * 100);
@@ -273,6 +279,25 @@ public final class AlgorithmTests {
 		System.out.println("All bucket / counting sort tests passed");
 	}
 	
+	public static void testHeapSort() {
+		Integer[] tests = new Integer[] { 7, 3, 12, 1, 6, 9, 9, 13 };
+		Linkedlist<Integer> ints = new Linkedlist<>(Arrays.asList(tests));
+		MaxHeap<Integer> heap = new MaxHeap<>(ints);
+		
+		Arrays.sort(tests);
+			
+		Integer[] sorted = heap.sort(Integer.class);
+		int prev = Integer.MIN_VALUE;
+		
+		for (int i : sorted) {
+			Assert(i >= prev, "Heap sort failed to sort: " + i + " is not >= " + prev);
+			prev = i;
+		}
+		//System.out.println(Arrays.toString(heap.sort(Integer.class)));
+		System.out.println("All heap sort tests passed");
+	}
+	
+	
 	public static void testFastKnight2() {
 		int steps;
 		steps = fastKnight2(new Knight(new Point(0, 0), Team.BLACK),
@@ -292,5 +317,58 @@ public final class AlgorithmTests {
 		System.out.println("All Fast Knight 2 tests passed");
 	}
 	
+	public static void testBinarySearch() {
+		int pos;
+		
+		pos = Search.binarySearch(null, 1);	
+		Assert(pos == -1, "Assert failed when array is null for b search");
+		
+		pos = Search.binarySearch(new String[0], "bSearch");
+		Assert(pos == -1, "Assert failed when array is empty for b search");
+		
+		Integer[] ints = new Integer[100000];
+		
+		pos = Search.binarySearch(ints, null);
+		Assert(pos == -1, "Assert failed when key is null for b search");
+		
+		int j = 0;
+		for (int i = 0; i < ints.length * 2; i++) {
+			if (i % 2 == 0) {
+				ints[j++] = i;
+			}
+		}
+		
+		for (int i = 0; i < ints.length * 2; i++) {
+			pos = Search.binarySearch(ints, i);
+			if (i % 2 == 0) {
+				Assert(pos == i / 2, "Failed b search did not find: " + i);
+			}
+			else {
+				Assert(pos == -1, "Failed b search found: " + i);
+			}
+		}
+		
+		PlayingCardDeck deck = new PlayingCardDeck();
+		PlayingCard[] cards = deck.toArray();
+		
+		for (int i = 0; i < cards.length; i++) {
+			pos = Search.binarySearch(cards, deck.cardAt(i));
+			Assert(pos == i, "Failed b search");
+		}
+		
+		System.out.println("All Binary Search tests passed");
+	}
 	
+	
+	public static void testPrimes() {
+		Prime p = new Prime(10000);
+		
+		System.out.println(p.isPrime(1117));
+		System.out.println(p.closestPrime(1116));
+	}
+	
+	public static void testPath() {
+		String s = RandomProblems.path("mike", 3);
+		System.out.println(s);
+	}
 }

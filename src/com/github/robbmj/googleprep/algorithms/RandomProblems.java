@@ -181,4 +181,100 @@ public class RandomProblems {
 		
 		return c;
 	}
+	
+	public static String path(String wordToType, int width) {
+
+		int numLetters = 26;
+		
+		char[] keyPad = new char[numLetters];
+
+		int ord = 0;
+		
+		for (char c = 'a'; c <= 'z'; c++) {
+			keyPad[ord++] = c;
+			System.out.print(c);
+			if (ord % width == 0) {
+				System.out.println();
+			}
+		}
+		System.out.println("\n-------------------------------");
+		char[] letters = wordToType.toCharArray();
+		String path = "";
+		
+		int currentPos = 0;
+
+		for (int i = 0; i < letters.length; i++) {
+			
+	       	if (letters[i] != keyPad[currentPos]) {
+								
+	       		int y = (letters[i] - 'a') / width;
+				int x = (letters[i] - 'a') % width;
+				
+				int curY = currentPos / width;
+				int curX = currentPos % width;
+				
+				int diffX = x - curX;
+				int diffY = y - curY;
+				
+				path += strRepeat(diffX, diffX > 0 ? "r" : "l");
+				path += strRepeat(diffY, diffY > 0 ? "d" : "u");
+				path += "|";
+				
+				currentPos = letters[i] - 'a';
+			}
+		}
+
+		return path;
+	}
+
+	public static String strRepeat(int numTimes, String s) {
+		String str = "";
+		for (int i = 0; i < Math.abs(numTimes); i++) {
+			str += s;
+		}
+		return str;
+	}
+	
+	@SuppressWarnings("unused")
+	public static String _path(String wordToType, int width) {
+
+		int numLetters = 26;
+		int numRows = numLetters / width; //arg numLetters
+		numRows += numLetters % width;
+
+		char[] keyPad = new char[numLetters];
+
+		int ord = 0;
+		for (char l = 'a'; l <= 'z'; l++) {
+			keyPad[ord++] = l;
+		}
+
+		char[] letters = wordToType.toCharArray();
+		String path = "";
+		
+		int currentPos = 0;
+
+		for (int i = 0; i < letters.length; i++) {
+	       	if (letters[i] != keyPad[currentPos]) {
+				int diff = letters[i] - keyPad[currentPos];
+				int y = diff / width;
+				int x = diff % width;
+			
+				int curY = currentPos / width;
+				int curX = currentPos % width;
+			
+				int diffX = x - curX;
+				int diffY = y - curY;
+			
+				path += strRepeat(diffX, diffX > 0 ? "r" : "l");
+				path += strRepeat(diffY, diffY > 0 ? "d" : "u");
+				path += "|";
+			
+				currentPos = letters[i];
+			}
+		}
+
+		return path;
+	}
+
 }

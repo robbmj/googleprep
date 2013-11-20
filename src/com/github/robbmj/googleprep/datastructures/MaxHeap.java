@@ -1,3 +1,5 @@
+
+
 package com.github.robbmj.googleprep.datastructures;
 
 public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
@@ -18,7 +20,9 @@ public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 	@Override
 	public T remove() {
 		T obj = super.remove();
-		heapifyDown(0);
+		if (this.sortedPartition() > 1) {
+			heapifyDown(0);
+		}
 		return obj;
 	}
 
@@ -46,10 +50,10 @@ public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 		int indexOfLeftChild = (index * 2) + 1;
 		int indexOfRightChild = (index * 2) + 2;
 		
-		boolean leftChildExists = indexOfLeftChild < heap.size();
-		boolean rightChildExists = indexOfRightChild < heap.size();
+		boolean leftChildExists = indexOfLeftChild < this.sortedPartition();
+		boolean rightChildExists = indexOfRightChild < this.sortedPartition();
 		
-		if (!leftChildExists && !rightChildExists && index >= heap.size()) {
+		if (!leftChildExists && !rightChildExists && index >= this.sortedPartition()) {	
 			return;
 		}
 		
@@ -92,5 +96,18 @@ public final class MaxHeap<T extends Comparable<T>> extends Heap<T> {
 			
 			heapifyDown(indexSwapedOn);
 		}
+	}
+	
+	public T[] sort(Class<T> c) {
+		
+		@SuppressWarnings("unchecked")
+		T[] out = (T[])java.lang.reflect.Array.newInstance(c, this.sortedPartition());
+	
+		while (this.sortedPartition() > 0) {
+			swap(0, --sortedPartition);
+			heapifyDown(0);
+		}
+		
+		return heap.toArray(out);
 	}
 }

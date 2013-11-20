@@ -34,6 +34,10 @@ public class PlayingCardDeck {
 		}
 	}
 	
+	public PlayingCard[] toArray() {
+		return deck;
+	}
+	
 	public PlayingCard cardAt(int i) {
 		if (i < 0 || i >= deck.length) {
 			return null;

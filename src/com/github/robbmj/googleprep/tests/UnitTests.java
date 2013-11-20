@@ -24,11 +24,18 @@ import static com.github.robbmj.googleprep.tests.DataStructureTests.testMinSpann
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testQueue;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testSlice;
 import static com.github.robbmj.googleprep.tests.DataStructureTests.testStack;
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testHeapSort;
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testBinarySearch;
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testPrimes;
+import static com.github.robbmj.googleprep.tests.AlgorithmTests.testPath;
 
 public final class UnitTests {
 
 	public static void runAllTests() {
 
+		testPath();
+		//testPrimes();
+		System.exit(0);
 		
 		testDataStructrues();
 		testAlgorithums();
@@ -50,14 +57,19 @@ public final class UnitTests {
 	}
 	
 	public static void testAlgorithums() {
+		testBinarySearch();
+		
+		testHeapSort();
 		testBucketSort();
 		testCountingSort();
+		testMergeSort();
+		testQuickSort();
+		
 		testDeckSorting();
 		testFastKnight2();
 		testFastKnight();
 		testAttackPositions();
-		testMergeSort();
-		testQuickSort();
+		
 		testLessThan();
 		testMinSpanningTree();
 		
