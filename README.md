@@ -1,3 +1,3 @@
 googleprep
 ==========
-This a collection of Data Structures and algorithums I implemented in preperation for an interview with Google
+This a collection of data structures, algorithums and tests I implemented in preperation for an interview with Google
